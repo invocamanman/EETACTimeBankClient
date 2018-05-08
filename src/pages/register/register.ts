@@ -20,8 +20,13 @@ export class RegisterPage {
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad RegisterPage');
+  goToSignin(){
+    // go to the signin
+    this.navCtrl.push('signin');
+  }
+
+  signUp(name:string, username:string, mail:string, password: string, password2: string ){
+
   }
 
 }
