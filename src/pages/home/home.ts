@@ -15,5 +15,9 @@ export class HomePage {
     // go to the signin
     this.navCtrl.push('signin');
   }
+  goToRegister(){
+    // go to the signin
+    this.navCtrl.push('register');
+  }
 
 }

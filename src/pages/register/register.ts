@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {UserServiceProvider} from "../../providers/user-service/user-service";
 
 /**
  * Generated class for the RegisterPage page.
@@ -14,10 +15,11 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 @Component({
   selector: 'page-register',
   templateUrl: 'register.html',
+  providers: [UserServiceProvider],
 })
 export class RegisterPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private userService: UserServiceProvider) {
   }
 
   goToSignin(){
@@ -26,6 +28,39 @@ export class RegisterPage {
   }
 
   signUp(name:string, username:string, mail:string, password: string, password2: string ){
+
+    if (password != password2) {
+      console.log("no coinciden");
+      //this.showErrorToast("Passwords doesn't match");
+    }
+    else {
+      const userData = { name, username, mail, password };
+      this.userService.signUp$(userData).subscribe(
+        data => {
+          //this.userService.setUserLoggedIn();
+          console.log('User '+username+' added!');
+          localStorage.setItem('userId', data.userId);
+          localStorage.setItem('token', data.token);
+          //this.router.navigate(['home']);
+        },
+        data => {
+          console.log(data);
+          switch(data.error.validationError) {
+            case 'mail':
+              console.log('Invalid email format'); //Joi Validation failed
+              break;
+            case 'name':
+              console.log('Invalid name format');
+              break;
+            case 'username':
+              console.log('Invalid username format');
+              break;
+            case 'password':
+              console.log('Invalid password format');
+              break;
+          }
+        });
+    }
 
   }
 
