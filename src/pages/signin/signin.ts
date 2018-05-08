@@ -26,8 +26,8 @@ export class SigninPage {
     this.userService.signIn$(username, password).subscribe(
       data => {
         console.log(data);
-        //localStorage.setItem('userId', data.userId);
-        //localStorage.setItem('token', data.token);
+        localStorage.setItem('userId', data.userId);
+        localStorage.setItem('token', data.token);
       },
       data => {
         console.log(data);

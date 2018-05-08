@@ -8,7 +8,7 @@ import { Observable } from '../../../node_modules/rxjs';
   See https://angular.io/guide/dependency-injection for more info on providers
   and Angular DI.
 */
-const url = 'http://localhost:3000/users';
+const url = 'users';
 @Injectable()
 export class UserServiceProvider {
 

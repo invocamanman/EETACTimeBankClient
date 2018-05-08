@@ -44,20 +44,26 @@ export class RegisterPage {
           //this.router.navigate(['home']);
         },
         data => {
-          console.log(data);
-          switch(data.error.validationError) {
-            case 'mail':
-              console.log('Invalid email format'); //Joi Validation failed
-              break;
-            case 'name':
-              console.log('Invalid name format');
-              break;
-            case 'username':
-              console.log('Invalid username format');
-              break;
-            case 'password':
-              console.log('Invalid password format');
-              break;
+          console.log(data.error.dbError);
+          if (data.error.dbError === 'Duplicated')
+          {
+            console.log("ESE NOMBRE NOOO")
+          }
+          else {
+            switch (data.error.validationError) {
+              case 'mail':
+                console.log('Invalid email format'); //Joi Validation failed
+                break;
+              case 'name':
+                console.log('Invalid name format');
+                break;
+              case 'username':
+                console.log('Invalid username format');
+                break;
+              case 'password':
+                console.log('Invalid password format');
+                break;
+            }
           }
         });
     }
