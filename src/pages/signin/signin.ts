@@ -28,6 +28,7 @@ export class SigninPage {
         console.log(data);
         localStorage.setItem('userId', data.userId);
         localStorage.setItem('token', data.token);
+
       },
       data => {
         console.log(data);
