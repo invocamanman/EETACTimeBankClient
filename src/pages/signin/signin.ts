@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {Component, ViewChild} from '@angular/core';
+import {IonicPage, Nav, NavController, NavParams} from 'ionic-angular';
 import {UserServiceProvider} from "../../providers/user-service/user-service";
 import { ToastController } from 'ionic-angular';
 /**
@@ -19,7 +19,9 @@ import { ToastController } from 'ionic-angular';
 })
 export class SigninPage {
 
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private userService: UserServiceProvider, public toastCtrl: ToastController) {
+
   }
 
 
@@ -50,6 +52,8 @@ export class SigninPage {
     this.navCtrl.push('register');
 
   }
-
+  goToMainpage(){
+    this.navCtrl.push('mainpage');
+  }
 
 }
