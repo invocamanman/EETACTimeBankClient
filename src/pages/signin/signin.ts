@@ -53,7 +53,8 @@ export class SigninPage {
 
   }
   goToMainpage(){
-    this.navCtrl.push('mainpage');
+    //this.navCtrl.push('mainpage');
+    this.navCtrl.setRoot('mainpage')
   }
 
 }
