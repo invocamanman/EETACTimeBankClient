@@ -31,9 +31,10 @@ export class SigninPage {
         console.log(data);
         localStorage.setItem('userId', data.userId);
         localStorage.setItem('token', data.token);
+        this.navCtrl.setRoot('mainpage');
 
         let toast = this.toastCtrl.create({
-          message: 'User was added successfully' + data,
+          message: 'User was added successfully' + data.userId,
           duration: 3000
         });
         toast.present();
