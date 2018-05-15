@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 
 /**
  * Generated class for the MainpagePage page.
@@ -17,8 +17,13 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class MainpagePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController) {
 
+    let toast = this.toastCtrl.create({
+      message: 'Welcome ' + localStorage.getItem('userId'),
+      duration: 3000
+    });
+    toast.present();
 
   }
 

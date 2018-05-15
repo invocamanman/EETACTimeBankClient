@@ -34,7 +34,7 @@ export class SigninPage {
         this.navCtrl.setRoot('mainpage');
 
         let toast = this.toastCtrl.create({
-          message: 'User was added successfully' + data.userId,
+          message: 'User was login successfully :D' + data.userId,
           duration: 3000
         });
         toast.present();

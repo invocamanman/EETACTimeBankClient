@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 import {UserServiceProvider} from "../../providers/user-service/user-service";
 
 /**
@@ -19,7 +19,7 @@ import {UserServiceProvider} from "../../providers/user-service/user-service";
 })
 export class RegisterPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private userService: UserServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private userService: UserServiceProvider,public toastCtrl: ToastController) {
   }
 
   goToSignin(){
@@ -41,6 +41,11 @@ export class RegisterPage {
           console.log('User '+username+' added!');
           localStorage.setItem('userId', data.userId);
           localStorage.setItem('token', data.token);
+          let toast = this.toastCtrl.create({
+            message: 'The user '+ username + 'was registered successfully :D',
+            duration: 3000
+          });
+          toast.present();
           //this.router.navigate(['home']);
         },
         data => {
