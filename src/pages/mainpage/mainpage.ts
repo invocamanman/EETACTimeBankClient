@@ -34,7 +34,7 @@ export class MainpagePage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad MainpagePage');
 
-   /* this.activityService.getActivityAll().subscribe(
+    this.activityService.getActivityAll().subscribe(
       response => {
         if (response) {
           console.log(response);
@@ -44,7 +44,7 @@ export class MainpagePage {
       error => {
         console.log(<any>error);
       }
-    );*/
+    );
   }
 
 
