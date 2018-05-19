@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
+
+//providers
+import {ActivityServiceProvider} from "../../providers/activity-service/activity-service";
 
 /**
  * Generated class for the MainpagePage page.
@@ -17,7 +20,7 @@ import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angula
 })
 export class MainpagePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public activityService: ActivityServiceProvider) {
 
     let toast = this.toastCtrl.create({
       message: 'Welcome ' + localStorage.getItem('userId'),
@@ -25,10 +28,23 @@ export class MainpagePage {
     });
     toast.present();
 
+
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MainpagePage');
+
+   /* this.activityService.getActivityAll().subscribe(
+      response => {
+        if (response) {
+          console.log(response);
+
+        }
+      },
+      error => {
+        console.log(<any>error);
+      }
+    );*/
   }
 
 
