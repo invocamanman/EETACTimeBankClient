@@ -6,6 +6,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { ProfilePage } from '../pages/profile/profile';
 import { MainpagePage} from "../pages/mainpage/mainpage";
+import {ActivityRequestPage} from '../pages/activity-request/activity-request';
+import {BancPage} from '../pages/banc/banc'
+import {MessagesPage} from '../pages/messages/messages'
+
 
 @Component({
   templateUrl: 'app.html'
@@ -26,9 +30,13 @@ export class MyApp {
       statusBar.styleDefault();
       splashScreen.hide();
       this.pages = [
-        { title: 'MainPage', component: MainpagePage},
-        { title: 'Profile', component: ProfilePage},
+        { title: 'Pagina Principal', component: MainpagePage},
+        { title: 'Perfil', component: ProfilePage},
+        { title: 'Missatges' , component: MessagesPage},
+        { title: 'Banc' , component: BancPage},
+        { title: 'Peticions' , component: ActivityRequestPage},
         { title: 'Exit', component: HomePage }
+
       ];
     });
   }

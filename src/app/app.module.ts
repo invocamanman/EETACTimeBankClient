@@ -5,8 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
-import {ProfilePage} from "../pages/profile/profile";
+
 import { UserServiceProvider } from '../providers/user-service/user-service';
 import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -14,11 +13,22 @@ import { AuthGuard } from '../auth/auth.guard';
 import { APIInterceptor } from '../interceptors/api.interceptor';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 
+//pages
+import { HomePage } from '../pages/home/home';
+import {ProfilePage} from "../pages/profile/profile";
+import {ActivityRequestPage} from "../pages/activity-request/activity-request";
+import {BancPage} from "../pages/banc/banc";
+import {MessagesPage} from "../pages/messages/messages";
+
+
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    ProfilePage
+    ProfilePage,
+    ActivityRequestPage,
+    BancPage,
+    MessagesPage
   ],
   imports: [
     BrowserModule,
@@ -29,7 +39,10 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
   entryComponents: [
     MyApp,
     HomePage,
-    ProfilePage
+    ProfilePage,
+    ActivityRequestPage,
+    BancPage,
+    MessagesPage
   ],
   providers: [
     StatusBar,
