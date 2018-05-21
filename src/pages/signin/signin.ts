@@ -2,6 +2,7 @@ import {Component, ViewChild} from '@angular/core';
 import {IonicPage, Nav, NavController, NavParams} from 'ionic-angular';
 import {UserServiceProvider} from "../../providers/user-service/user-service";
 import { ToastController } from 'ionic-angular';
+import { Events } from 'ionic-angular';
 /**
  * Generated class for the SigninPage page.
  *
@@ -20,7 +21,7 @@ import { ToastController } from 'ionic-angular';
 export class SigninPage {
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private userService: UserServiceProvider, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private userService: UserServiceProvider, public toastCtrl: ToastController, public events: Events) {
 
   }
 
@@ -31,7 +32,9 @@ export class SigninPage {
         console.log(data);
         localStorage.setItem('userId', data.userId);
         localStorage.setItem('token', data.token);
+        localStorage.setItem('username', data.username);
         this.navCtrl.setRoot('mainpage');
+        this.events.publish('user:created', data.username);
 
         let toast = this.toastCtrl.create({
           message: 'User was login successfully :D' + data.userId,
@@ -48,6 +51,8 @@ export class SigninPage {
         toast.present();
       });
   }
+
+
   goToRegister(){
     // go to the signin
     this.navCtrl.push('register');
