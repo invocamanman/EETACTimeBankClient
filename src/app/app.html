@@ -9,7 +9,7 @@
     <ion-list>
       <img src="assets/imgs/logo.png" style="display:block;border-radius:50%;width:40%;height:auto;margin-left:auto;margin-right:auto;" />
       <h3 id="menu-heading1" style="color:#000000;font-weight:400;text-align:center;">
-        Posar nom de usuari D:
+        {{username}}
       </h3>
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         <ion-icon name= {{p.icon}} item-left></ion-icon>
