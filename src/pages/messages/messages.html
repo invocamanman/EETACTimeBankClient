@@ -5,19 +5,76 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
-
   <ion-navbar color="secondary">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>messages</ion-title>
   </ion-navbar>
-
-
 </ion-header>
-
 
 <ion-content padding>
 
+  <ion-list no-lines *ngIf=conversation>
+
+    <div *ngFor="let message of conversation.messages" >
+
+    <ion-item *ngIf="!isTheUser(message)" class="userMessage">
+
+      <ion-thumbnail item-start>
+        <img src={{oppositePhoto}}>
+      </ion-thumbnail>
+
+      <h3>{{message.text}}</h3>
+      <p>Date • 1988</p>
+
+    </ion-item>
+
+    <ion-item *ngIf="isTheUser(message)" class="profileMessage">
+
+      <h2>{{message.text}}</h2>
+      <p>Date 05/05/1995</p>
+
+      <ion-thumbnail item-end>
+        <img src={{myPhoto}}>
+      </ion-thumbnail>
+
+    </ion-item>
+
+
+    </div>
+  </ion-list>
+  <ion-item>
+      <ion-input type="text" [(ngModel)]="message"></ion-input>
+      <button ion-button clear item-end (click)="sendTheMessage()" >View</button>
+  </ion-item>
+  <div *ngIf="!isChatDefined()">
+    <h5> LA CONVERSA SELECCIONADA JA NO ESTÀ DISPONIBLE</h5>
+  </div>
+
+
+  <!--ion-list no-lines col>
+    <ion-item *ngFor="let message of messages" col>
+      <ion-list *ngIf="isTheUser(message.userId)">
+        <div class="profile-message message-container">
+          <div class="user-image">
+            <img src="https://pbs.twimg.com/profile_images/832834678746935296/y0m4MXr1_400x400.jpg">
+          </div>
+          <div class="message">
+            <p maxlength="4" class="ng-binding">{{message.text}}</p>
+          </div>
+        </div>
+      </ion-list>
+      <ion-list *ngIf="!isTheUser(message.userId)">
+        <div class="profile2-message message-container">
+          <div class="user2-image">
+            <img src="https://coo.tuvotacion.com/imagenes_opciones/cual-chico-de-cnco-es-mas-guapo-1791440.jpg">
+          </div>
+          <div class="message2">
+            <p maxlength="4" class="ng-binding">{{message.text}}</p>
+          </div>
+        </div>
+      </ion-list>
+    </ion-item>
+  </ion-list-->
 </ion-content>

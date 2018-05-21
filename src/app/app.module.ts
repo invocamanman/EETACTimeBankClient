@@ -21,6 +21,8 @@ import {ProfilePage}          from "../pages/profile/profile";
 import {ActivityRequestPage}  from "../pages/activity-request/activity-request";
 import {BancPage}             from "../pages/banc/banc";
 import {MessagesPage}         from "../pages/messages/messages";
+import {ChatPage} from "../pages/chat/chat";
+import { ChatServiceProvider } from '../providers/chat-service/chat-service';
 
 
 
@@ -32,7 +34,8 @@ import {MessagesPage}         from "../pages/messages/messages";
     ProfilePage,
     ActivityRequestPage,
     BancPage,
-    MessagesPage
+    MessagesPage,
+    ChatPage
   ],
   imports: [
     BrowserModule,
@@ -46,7 +49,8 @@ import {MessagesPage}         from "../pages/messages/messages";
     ProfilePage,
     ActivityRequestPage,
     BancPage,
-    MessagesPage
+    MessagesPage,
+    ChatPage
   ],
   providers: [
     StatusBar,
@@ -60,7 +64,8 @@ import {MessagesPage}         from "../pages/messages/messages";
     },
     UserServiceProvider,
     AuthServiceProvider,
-    ActivityServiceProvider
+    ActivityServiceProvider,
+    ChatServiceProvider
   ]
 })
 export class AppModule {}

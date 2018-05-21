@@ -9,6 +9,7 @@ import { MainpagePage} from "../pages/mainpage/mainpage";
 import {ActivityRequestPage} from '../pages/activity-request/activity-request';
 import {BancPage} from '../pages/banc/banc'
 import {MessagesPage} from '../pages/messages/messages'
+import {ChatPage} from "../pages/chat/chat";
 
 
 @Component({
@@ -35,7 +36,8 @@ export class MyApp {
         { title: 'Missatges' , component: MessagesPage},
         { title: 'Banc' , component: BancPage},
         { title: 'Peticions' , component: ActivityRequestPage},
-        { title: 'Exit', component: HomePage }
+        { title: 'Exit', component: HomePage },
+        {title: 'ChatsActuals',component:ChatPage}
 
       ];
     });
