@@ -21,14 +21,15 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthGuard } from '../auth/auth.guard';
 import { APIInterceptor } from '../interceptors/api.interceptor';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
-
-//pages
-import { HomePage }             from '../pages/home/home';
-import { ProfilePage }          from "../pages/profile/profile";
-import { ActivityRequestPage }  from "../pages/activity-request/activity-request";
-import { BancPage }             from "../pages/banc/banc";
-import { MessagesPage }         from "../pages/messages/messages";
-import { ImageuploadPage }      from "../pages/imageupload/imageupload";
+import {ChatServiceProvider} from '../providers/chat-service/chat-service';
+//pages from "../pages/imageupload/imageupload";
+import { HomePage }           from '../pages/home/home';
+import {ProfilePage}          from "../pages/profile/profile";
+import {ActivityRequestPage}  from "../pages/activity-request/activity-request";
+import {BancPage}             from "../pages/banc/banc";
+import {MessagesPage}         from "../pages/messages/messages";
+import {ImageuploadPage} from "../pages/imageupload/imageupload";
+import {ChatPage} from "../pages/chat/chat";
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { ImageuploadPage }      from "../pages/imageupload/imageupload";
     ActivityRequestPage,
     BancPage,
     MessagesPage,
-    ImageuploadPage
+    ImageuploadPage,
+    ChatPage
   ],
   imports: [
     BrowserModule,
@@ -55,7 +57,8 @@ import { ImageuploadPage }      from "../pages/imageupload/imageupload";
     ActivityRequestPage,
     BancPage,
     MessagesPage,
-    ImageuploadPage
+    ImageuploadPage,
+    ChatPage
   ],
   providers: [
     StatusBar,
@@ -71,7 +74,8 @@ import { ImageuploadPage }      from "../pages/imageupload/imageupload";
     UserServiceProvider,
     AuthServiceProvider,
     ActivityServiceProvider,
-    FileServiceProvider
+    FileServiceProvider,
+    ChatServiceProvider
   ]
 })
 export class AppModule {}
