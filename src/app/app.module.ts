@@ -18,10 +18,11 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 //pages
 import { HomePage }           from '../pages/home/home';
 import {ProfilePage}          from "../pages/profile/profile";
-import {ActivityRequestPage}  from "../pages/activity-request/activity-request";
 import {BancPage}             from "../pages/banc/banc";
 import {MessagesPage}         from "../pages/messages/messages";
-
+import { PeticionsPage } from '../pages/peticions/peticions';
+import { ActivityRequestProvider } from '../providers/activity-request/activity-request';
+import { RequestDetailPage } from "../pages/peticions/request-detail/request-detail";
 
 
 
@@ -30,7 +31,7 @@ import {MessagesPage}         from "../pages/messages/messages";
     MyApp,
     HomePage,
     ProfilePage,
-    ActivityRequestPage,
+    PeticionsPage,
     BancPage,
     MessagesPage
   ],
@@ -44,7 +45,7 @@ import {MessagesPage}         from "../pages/messages/messages";
     MyApp,
     HomePage,
     ProfilePage,
-    ActivityRequestPage,
+    PeticionsPage,
     BancPage,
     MessagesPage
   ],
@@ -60,7 +61,8 @@ import {MessagesPage}         from "../pages/messages/messages";
     },
     UserServiceProvider,
     AuthServiceProvider,
-    ActivityServiceProvider
+    ActivityServiceProvider,
+    ActivityRequestProvider
   ]
 })
 export class AppModule {}

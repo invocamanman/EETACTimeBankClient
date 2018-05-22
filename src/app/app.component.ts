@@ -6,9 +6,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { ProfilePage } from '../pages/profile/profile';
 import { MainpagePage} from "../pages/mainpage/mainpage";
-import {ActivityRequestPage} from '../pages/activity-request/activity-request';
 import {BancPage} from '../pages/banc/banc'
 import {MessagesPage} from '../pages/messages/messages'
+import { PeticionsPage } from '../pages/peticions/peticions';
 
 
 @Component({
@@ -34,7 +34,7 @@ export class MyApp {
         { title: 'Perfil', component: ProfilePage},
         { title: 'Missatges' , component: MessagesPage},
         { title: 'Banc' , component: BancPage},
-        { title: 'Peticions' , component: ActivityRequestPage},
+        { title: 'Peticions' , component: PeticionsPage},
         { title: 'Exit', component: HomePage }
 
       ];
