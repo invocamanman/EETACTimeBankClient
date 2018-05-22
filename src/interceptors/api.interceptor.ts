@@ -4,7 +4,6 @@ import {Observable} from 'rxjs/Observable';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import {NavController} from "ionic-angular";
 
-
 @Injectable()
 export class APIInterceptor implements HttpInterceptor {
 
@@ -27,6 +26,7 @@ export class APIInterceptor implements HttpInterceptor {
     const apiReq = req.clone({
       //url: `http://localhost:3000/${req.url}`,
       url: `http://bancdetemps.tk:3000/${req.url}`,
+      //url: `http://localhost:3000/${req.url}`,
       headers: req.headers.set('Authorization', authorization)
 
       //url: `http://192.168.0.13:3000/${req.url}`
