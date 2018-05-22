@@ -1,23 +1,178 @@
-<!--
-  Generated template for the ProfilePage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
-
     <ion-navbar color="secondary">
       <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
       </button>
       <ion-title>Profile</ion-title>
     </ion-navbar>
-
-
 </ion-header>
 
-
 <ion-content padding>
-  <h3>aqui també hi hauran coses</h3>
+  <body class="main-container" *ngIf='showProfile'>
+  <div class="row">
+    <div class="card profile-user">
+      <img src="{{user.image}}" width="70%"/><br/>
+      <h3>{{user.name}}</h3>
+      <h4><small class="text-muted">@{{user.username}}</small></h4>
+      <a href="mailto:{{user.mail}}?body=Your message within Main Body">{{user.mail}}</a>
+      <div class="star-container" >
+        <img [src]="star1img">
+        <img [src]="star2img">
+        <img [src]="star3img">
+        <img [src]="star4img">
+        <img [src]="star5img">
+      </div>
+      <p>{{user.description}}</p>
+      <a>Temas d'interés:</a>
+      <div class="row">&nbsp;&nbsp;
+        <div class="card" *ngFor="let tag of user.tags">&nbsp;{{tag}}&nbsp;</div>
+      </div>
+      <button type="button" (click)="addChat()" *ngIf="owner===false" class="btn btn-default">Xat</button>
+    </div>
+    <div class="profile-list">
+      <h3>Llista d'Activitats Ofertades</h3>
+      <div class="card" *ngFor="let activity of user.offered">
+        <div class="card-body">
+          <h3 class="card-text">{{activity.name}}
+            <a><small class="text-muted">@{{activity.user}}</small></a>
+          </h3>
+          <p><em>Publicat el {{activity.date | date:"dd/MM/yyyy/ 'a les' h:mma"}}</em></p>
+          <hr><h5>{{activity.description}}</h5>
+          <div class="row">&nbsp;&nbsp;
+            <div class="card" *ngFor="let tag of activity.tags">&nbsp;{{tag}}&nbsp;</div>
+          </div>
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="btn-group">
+              <button (click)="popupView(activity)" class="btn btn-sm btn-outline-secondary"
+                      data-toggle="modal" data-target="#showActivity">OBRIR</button>
+              <button (click)="popupEdit(activity)" class="btn btn-sm btn-outline-secondary"
+                      data-toggle="modal" data-target="#editActivity" *ngIf="owner">EDITAR</button>
+              <button (click)="popupReservation(activity)" class="btn btn-sm btn-outline-secondary"
+                      *ngIf="!owner">RESERVAR</button>
+            </div>
+            <h3>{{activity.cost}}h</h3>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Show Modal -->
+  <div class="modal fade" id="showActivity" tabindex="-1" role="dialog"
+       aria-labelledby="myModalLabel" aria-hidden="true" *ngIf="showView">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header modal-header-primary">
+          <h1>{{activitySelected.name}}
+            <br><a><small class="text-muted">@{{activitySelected.user}}</small></a>
+          </h1>
+        </div>
+        <div class="modal-body">
+          <em>Publicat el {{activitySelected.date | date:"dd/MM/yyyy/ 'a las' h:mma"}}</em>
+          <h3>Preu: {{activitySelected.cost}}h</h3>
+          <h4>{{activitySelected.description}}</h4>
+
+          <!-- Mapa -->
+          <div>
+            <agm-map
+              [latitude]="latitud_map"
+              [longitude]="longitud_map"
+              [zoom]="17" *ngIf="showMap">
+
+              <!-- Actividad -->
+              <agm-marker
+                [latitude]="latitud_marker_activity"
+                [longitude]="longitud_marker_activity">
+                <agm-info-window>
+                  {{activitySelected.name}}
+                </agm-info-window>
+              </agm-marker>
+
+              <!-- Usuario -->
+              <agm-marker
+                [latitude]="latitud_marker_user"
+                [longitude]="longitud_marker_user">
+                <agm-info-window>
+                  Your current position
+                </agm-info-window>
+              </agm-marker>
+
+            </agm-map>
+          </div>
+          <div><br></div>
+          <div class="row">
+            <div class="card" *ngFor="let tag of activitySelected.tags">{{tag}}</div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tanca</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Fin Modal -->
+
+  <!-- Edit Modal -->
+  <div class="modal fade" id="editActivity" tabindex="-1" role="dialog"
+       aria-labelledby="myModalLabel" aria-hidden="true" *ngIf="showEdit">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header modal-header-primary">
+          <h1>Editar {{activitySelected.name}}
+            <br><a><small class="text-muted">@{{activitySelected.user}}</small></a>
+          </h1>
+        </div>
+        <div class="modal-body">
+          <em>Publicado el {{activitySelected.date | date:"dd/MM/yyyy/ 'a las' h:mma"}}</em>
+
+          <form (submit)="editActivity(name, cost, description, tag)">
+            <br><a>Nom de l'activitat</a>
+            <br><input class="input-box" #name type="text" [(ngModel)]="activitySelected.name" name="name">
+            <br><br><a>Cost en hores</a>
+            <br><input class="input-box" #cost type="number" min=0 step=0.25 [(ngModel)]="activitySelected.cost" name="cost">
+            <br><br><a>Descripció del que es realitzarà</a>
+            <br><input class="input-box" #description type="text" [(ngModel)]="activitySelected.description" name="description">
+            <br><br><a>Etiquetes resum, separa-les amb una ',' i un espai en blanc</a>
+            <br><input class="input-box" #tag type="text" [(ngModel)]="tagString" name="tag">
+          </form>
+
+          <!-- Mapa -->
+          <div>
+            <agm-map
+              [latitude]="latitud_map"
+              [longitude]="longitud_map"
+              [zoom]="17" *ngIf="showMap"
+              (mapClick)="mapClick($event)">
+
+              <!-- Actividad -->
+              <agm-marker
+                [latitude]="latitud_marker_activity"
+                [longitude]="longitud_marker_activity">
+                <agm-info-window>
+                  {{activitySelected.name}}
+                </agm-info-window>
+              </agm-marker>
+
+              <!-- Usuario -->
+              <agm-marker
+                [latitude]="latitud_marker_user"
+                [longitude]="longitud_marker_user">
+                <agm-info-window>
+                  Your current position
+                </agm-info-window>
+              </agm-marker>
+            </agm-map>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" (click)="editActivity(name, cost, description, tag, latitud_marker_activity, longitud_marker_activity)">Enviar</button>
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tanca</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Fin Modal -->
+  </body>
 </ion-content>

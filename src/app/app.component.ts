@@ -1,15 +1,15 @@
 import { Component, ViewChild } from '@angular/core';
-import {Events, Nav, Platform} from 'ionic-angular';
+import { Events, Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
 import { ProfilePage } from '../pages/profile/profile';
-import { MainpagePage} from "../pages/mainpage/mainpage";
-import {ActivityRequestPage} from '../pages/activity-request/activity-request';
-import {BancPage} from '../pages/banc/banc'
-import {MessagesPage} from '../pages/messages/messages'
-import {ChatPage} from "../pages/chat/chat";
+import { MainpagePage } from "../pages/mainpage/mainpage";
+import { ActivityRequestPage } from '../pages/activity-request/activity-request';
+import { BancPage } from '../pages/banc/banc'
+import { MessagesPage } from '../pages/messages/messages'
+import { ChatPage } from "../pages/chat/chat";
 
 
 @Component({
@@ -22,8 +22,6 @@ export class MyApp {
   rootPage:any = HomePage;
 
   pages: Array<{title: string, component: any, icon: string}>;
-
-
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public events: Events) {
     platform.ready().then(() => {
@@ -40,7 +38,7 @@ export class MyApp {
       splashScreen.hide();
       this.pages = [
 
-        {title: 'ChatsActuals',component:ChatPage,icon:'mail'},
+        { title: 'ChatsActuals',component:ChatPage,icon:'mail'},
         { title: 'Pagina Principal', component: MainpagePage, icon: 'home'},
         { title: 'Perfil', component: ProfilePage, icon: 'contact'},
         { title: 'Missatges' , component: MessagesPage, icon: 'mail'},

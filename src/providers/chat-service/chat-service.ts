@@ -5,12 +5,6 @@ import {Observable} from "rxjs/Observable";
 import {Chat} from "../../models/chat/chat";
 import {Message} from "../../models/chat/message"
 
-/*
-  Generated class for the ChatServiceProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 const url = 'chats';
 @Injectable()
 export class ChatServiceProvider {
@@ -19,9 +13,7 @@ export class ChatServiceProvider {
   currentChat = new BehaviorSubject(null);
   newMessage = new BehaviorSubject(null);
 
-  constructor(public http: HttpClient) {
-    console.log('Hello ChatServiceProvider Provider');
-  }
+  constructor(public http: HttpClient) { }
   /* GET ALL THE USERCHATS */
   public getUserChats() {
     const id = localStorage.getItem('userId');

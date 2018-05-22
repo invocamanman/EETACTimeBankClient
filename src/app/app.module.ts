@@ -3,6 +3,8 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
+import { AgmCoreModule } from '@agm/core';
+
 //per les imatges
 import {FileTransfer, FileUploadOptions, FileTransferObject} from "@ionic-native/file-transfer";
 import {File} from '@ionic-native/file';
@@ -21,12 +23,12 @@ import { APIInterceptor } from '../interceptors/api.interceptor';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 
 //pages
-import { HomePage }           from '../pages/home/home';
-import {ProfilePage}          from "../pages/profile/profile";
-import {ActivityRequestPage}  from "../pages/activity-request/activity-request";
-import {BancPage}             from "../pages/banc/banc";
-import {MessagesPage}         from "../pages/messages/messages";
-import {ImageuploadPage} from "../pages/imageupload/imageupload";
+import { HomePage }             from '../pages/home/home';
+import { ProfilePage }          from "../pages/profile/profile";
+import { ActivityRequestPage }  from "../pages/activity-request/activity-request";
+import { BancPage }             from "../pages/banc/banc";
+import { MessagesPage }         from "../pages/messages/messages";
+import { ImageuploadPage }      from "../pages/imageupload/imageupload";
 
 
 @NgModule({
@@ -42,7 +44,8 @@ import {ImageuploadPage} from "../pages/imageupload/imageupload";
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    HttpClientModule
+    HttpClientModule,
+    AgmCoreModule.forRoot({ apiKey: 'AIzaSyD4btF6um1qmUt7IZDVsU8WlWI6-PMYZk0' })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -64,7 +67,6 @@ import {ImageuploadPage} from "../pages/imageupload/imageupload";
       provide: HTTP_INTERCEPTORS,
       useClass: APIInterceptor,
       multi: true,
-
     },
     UserServiceProvider,
     AuthServiceProvider,

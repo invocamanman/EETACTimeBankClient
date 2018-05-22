@@ -1,4 +1,3 @@
-
 import { HttpClientModule, HttpHeaders, HttpRequest, HttpClient} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import 'rxjs/Rx';
@@ -6,20 +5,11 @@ import {Activity} from "../../models/activity.model";
 import {ActivityRequest} from "../../models/activityRequest.model";
 import { environment } from '../../environments/environment';
 
-
-/*
-  Generated class for the ActivityServiceProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class ActivityServiceProvider {
   public url = environment.urlBackend;
 
-  constructor(public http: HttpClient) {
-    console.log('Hello ActivityServiceProvider Provider');
-  }
+  constructor(public http: HttpClient) { }
 
   /*************METODES*******************/
 

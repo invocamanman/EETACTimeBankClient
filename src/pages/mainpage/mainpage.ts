@@ -66,9 +66,11 @@ export class MainpagePage implements OnInit, OnDestroy {
     this.showModalActivity = false;
     this.showModalPetition = false;
   }
+
   ngOnDestroy() {
-    this.activityNotifSubs.unsubscribe();
+    //this.activityNotifSubs.unsubscribe();
   }
+
   ngOnInit() {
     this.activityService.getActivityAll().subscribe(
       response => {
@@ -81,7 +83,6 @@ export class MainpagePage implements OnInit, OnDestroy {
         console.log(<any>error);
       }
     );
-
   }
 
   addTag(tag: string) { this.activity.tags.push(tag); }
@@ -127,26 +128,6 @@ export class MainpagePage implements OnInit, OnDestroy {
     this.showModalActivity = true;
   }
 
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad MainpagePage');
-
-    this.activityService.getActivityAll().subscribe(
-      response => {
-        if (response) {
-          console.log(response);
-          this.novetats = response;
-
-
-        }
-      },
-      error => {
-        console.log(<any>error);
-      }
-    );
-  }
-
-
   makeApetition(ToName, idActivity) {
     this.activityRequest = new ActivityRequest(localStorage.username, ToName, idActivity, false, null, null);
     this.sendAPetition(this.activityRequest);
@@ -182,7 +163,4 @@ export class MainpagePage implements OnInit, OnDestroy {
       }
     );
   }
-
-
-
 }
