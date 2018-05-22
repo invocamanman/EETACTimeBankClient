@@ -4,6 +4,8 @@ import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import {Observable} from "rxjs/Observable";
 import {Chat} from "../../models/chat/chat";
 import {Message} from "../../models/chat/message"
+import * as io from 'socket.io-client';
+import {messageTypes} from "../../configs/enums_chat";
 
 /*
   Generated class for the ChatServiceProvider provider.
@@ -18,9 +20,24 @@ export class ChatServiceProvider {
   userChats = new BehaviorSubject(null);
   currentChat = new BehaviorSubject(null);
   newMessage = new BehaviorSubject(null);
-
+  socket;
+  private url = 'http://localhost:8880';
   constructor(public http: HttpClient) {
     console.log('Hello ChatServiceProvider Provider');
+  }
+  /* CREATE A SOCKET CONNECTION */
+  socketConnect() {
+    if (!this.socket) {
+      this.socket = io(this.url);
+      console.log('nou sockt creat' + this.socket);
+      this.sendMessageSocket(messageTypes.NEW_USER, localStorage.getItem('userId'));
+      return this.socket;
+    }
+  }
+  /* SEND A MESSAGE VIA SOCKET*/
+  sendMessageSocket(messageType, message) {
+    this.socket.emit(messageType, JSON.stringify(message));
+    console.log(JSON.stringify(message));
   }
   /* GET ALL THE USERCHATS */
   public getUserChats() {
@@ -46,7 +63,7 @@ export class ChatServiceProvider {
     this.userChats.next(chats);
     return chatId;
   }
-  /* ACTUALIZE WITH A NEW MESSAGE*/
+  /*SEND MESSAGE*/
   public sendMessage(message): BehaviorSubject<Chat> {
     const id = localStorage.getItem('userId');
     const messageToSend = new Message(id, message, new Date(), false);

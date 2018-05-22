@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {ChatServiceProvider} from "../../providers/chat-service/chat-service";
+import {messageTypes} from "../../configs/enums_chat";
 
 /**
  * Generated class for the MessagesPage page.
@@ -51,7 +52,7 @@ export class MessagesPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad MessagesPage');
+    this.ChatServiceProvider.socketConnect();
     this.ChatServiceProvider.currentChat.subscribe((currentChatId) => {
       this.currentChatId = currentChatId;
   })
@@ -62,10 +63,26 @@ export class MessagesPage {
     }
     this.ChatServiceProvider.newMessage.subscribe((message) => {
       if (message) {
-        console.log(this.message);
-        const frameTosend = { 'chatId': this.currentChatId, message };
-        //this.userChatService.sendMessageSocket(messageTypes.NEW_MESSAGE, frameTosend);
-        this.conversation.messages.push(message);
+        console.log('this is the actual:'+this.message);
+        if(this.conversation){
+          this.conversation.messages.push(message);
+          const frameTosend = { 'chatId': this.currentChatId, message };
+          this.ChatServiceProvider.sendMessageSocket(messageTypes.NEW_MESSAGE, frameTosend);
+          const userChats = this.ChatServiceProvider.userChats.value;
+          console.log(userChats);
+          console.log(this.currentChatId);
+          const chats = userChats.map(chat => {
+            console.log('chat');
+            console.log(chat);
+            if (chat.id === this.currentChatId) {
+              console.log('trobat afegeixo el missatge:' + message.text);
+              return {...chat, lastMessage: message.text};
+            } else {
+              return chat;
+            }
+          });
+          this.ChatServiceProvider.userChats.next(chats);
+        }
 
       }
     });
@@ -80,13 +97,13 @@ export class MessagesPage {
     return false;
   }
   isChatDefined(){
+    console.log(this.currentChatId);
     return this.currentChatId;
-
   }
   sendTheMessage(){
     console.log(this.message);
     this.ChatServiceProvider.sendMessage(this.message);
-    this.message="";
+    this.message = null;
 
   }
   private assignPhotos() {
@@ -99,5 +116,6 @@ export class MessagesPage {
       this.myPhoto = this.conversation.users[1].userAvatar;
     }
   }
+
 
 }
