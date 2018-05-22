@@ -67,7 +67,7 @@ export class MainpagePage implements OnInit, OnDestroy {
     this.showModalPetition = false;
   }
   ngOnDestroy() {
-    this.activityNotifSubs.unsubscribe();
+    //this.activityNotifSubs.unsubscribe();
   }
   ngOnInit() {
     this.activityService.getActivityAll().subscribe(

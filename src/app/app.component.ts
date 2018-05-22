@@ -29,7 +29,7 @@ export class MyApp {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      this.username = localStorage.getItem('username');
+      //this.username = localStorage.getItem('username');
 
       events.subscribe('user:created', (username) => {
         // user and time are the same arguments passed in `events.publish(user, time)`
