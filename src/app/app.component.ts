@@ -1,14 +1,15 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform, NavController, IonicPage} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { HomePage } from '../pages/home/home';
-import { ProfilePage } from '../pages/profile/profile';
-import { MainpagePage} from "../pages/mainpage/mainpage";
-import {ActivityRequestPage} from '../pages/activity-request/activity-request';
-import {BancPage} from '../pages/banc/banc'
-import {MessagesPage} from '../pages/messages/messages'
+
+import { HomePage }           from '../pages/home/home';
+import { ProfilePage }        from '../pages/profile/profile';
+import { MainpagePage}        from "../pages/mainpage/mainpage";
+import {ActivityRequestPage}  from '../pages/activity-request/activity-request';
+import {BancPage}             from '../pages/banc/banc'
+import {MessagesPage}         from '../pages/messages/messages'
 
 
 @Component({
@@ -39,6 +40,8 @@ export class MyApp {
 
       ];
     });
+
+
   }
   openPage(page) {
     // Reset the content nav to have just this page

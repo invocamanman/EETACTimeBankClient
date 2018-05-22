@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpRequest, HttpEvent, HttpEventType } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from '../../../node_modules/rxjs';
+import {User} from "../../models/user.model";
 
 /*
   Generated class for the UserServiceProvider provider.
@@ -25,6 +26,21 @@ export class UserServiceProvider {
   signUp$(userData: any) {
     console.log(userData);
     return this.http.post<any>(url + '/signup', userData);
+  }
+
+  getUserWallet(id: string): Observable<any> {
+    return this.http.post<any>(url + '/getUserById', { id });
+  }
+
+  getProfileUser$(name: string) {
+    return this.http.get<User>(url + '/' + name);
+  }
+
+  fileUpdate(file: File) {
+    const req = new HttpRequest('POST', '/file', file, {
+      reportProgress: true
+    });
+    return this.http.request(req);
   }
 
 }
