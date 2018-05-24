@@ -22,6 +22,7 @@ import { AuthGuard } from '../auth/auth.guard';
 import { APIInterceptor } from '../interceptors/api.interceptor';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import {ChatServiceProvider} from '../providers/chat-service/chat-service';
+import {ActivityRequestService} from "../providers/activity-request-service/activity-request.service";
 //pages from "../pages/imageupload/imageupload";
 import { HomePage }           from '../pages/home/home';
 import {ProfilePage}          from "../pages/profile/profile";
@@ -79,7 +80,8 @@ import {ChatPage} from "../pages/chat/chat";
     ActivityServiceProvider,
     ActivityRequestProvider,
     FileServiceProvider,
-    ChatServiceProvider
+    ChatServiceProvider,
+    ActivityRequestService
   ]
 })
 export class AppModule {}

@@ -20,12 +20,14 @@ export class BancPage {
   SearchDone = false;
   myActivitiesList: Array<ActivityRequest> = [];
   theirActivitiesList: Array<ActivityRequest> = [];
-  user = {username: 'Usuario', wallet: 'Wallet'};
+  user = {username: '', wallet: ''};
   constructor(public navCtrl: NavController, public navParams: NavParams, private activityRequestService: ActivityRequestService, private userService: UserServiceProvider) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BancPage');
+    this.getDoneActivities();
+    this.getWallet();
   }
 
   getDoneActivities() {
