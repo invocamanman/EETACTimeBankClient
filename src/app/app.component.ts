@@ -5,8 +5,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
 import { ProfilePage } from '../pages/profile/profile';
+import { PeticionsPage } from '../pages/peticions/peticions';
 import { MainpagePage } from "../pages/mainpage/mainpage";
-import { ActivityRequestPage } from '../pages/activity-request/activity-request';
 import { BancPage } from '../pages/banc/banc'
 import { MessagesPage } from '../pages/messages/messages'
 import { ChatPage } from "../pages/chat/chat";
@@ -43,7 +43,7 @@ export class MyApp {
         { title: 'Perfil', component: ProfilePage, icon: 'contact'},
         { title: 'Missatges' , component: MessagesPage, icon: 'mail'},
         { title: 'Banc' , component: BancPage, icon: 'cash'},
-        { title: 'Peticions' , component: ActivityRequestPage, icon: 'notifications'},
+        { title: 'Peticions' , component: PeticionsPage, icon: 'notifications'},
         { title: 'Exit', component: HomePage, icon: 'exit' }
 
       ];

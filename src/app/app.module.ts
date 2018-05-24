@@ -25,9 +25,12 @@ import {ChatServiceProvider} from '../providers/chat-service/chat-service';
 //pages from "../pages/imageupload/imageupload";
 import { HomePage }           from '../pages/home/home';
 import {ProfilePage}          from "../pages/profile/profile";
-import {ActivityRequestPage}  from "../pages/activity-request/activity-request";
 import {BancPage}             from "../pages/banc/banc";
 import {MessagesPage}         from "../pages/messages/messages";
+import { PeticionsPage } from '../pages/peticions/peticions';
+import { ActivityRequestProvider } from '../providers/activity-request/activity-request';
+import { RequestDetailPage } from "../pages/peticions/request-detail/request-detail";
+
 import {ImageuploadPage} from "../pages/imageupload/imageupload";
 import {ChatPage} from "../pages/chat/chat";
 
@@ -37,7 +40,7 @@ import {ChatPage} from "../pages/chat/chat";
     MyApp,
     HomePage,
     ProfilePage,
-    ActivityRequestPage,
+    PeticionsPage,
     BancPage,
     MessagesPage,
     ImageuploadPage,
@@ -54,7 +57,7 @@ import {ChatPage} from "../pages/chat/chat";
     MyApp,
     HomePage,
     ProfilePage,
-    ActivityRequestPage,
+    PeticionsPage,
     BancPage,
     MessagesPage,
     ImageuploadPage,
@@ -74,6 +77,7 @@ import {ChatPage} from "../pages/chat/chat";
     UserServiceProvider,
     AuthServiceProvider,
     ActivityServiceProvider,
+    ActivityRequestProvider,
     FileServiceProvider,
     ChatServiceProvider
   ]
