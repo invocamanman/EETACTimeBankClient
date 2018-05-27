@@ -67,6 +67,8 @@ export class ChatPage {
   }
 
   ionViewDidLoad() {
+
+    this.ChatServiceProvider.socketConnect();
     /*RECEIVE THE USERSCHATS FROM SERVER*/
     this.ChatServiceProvider.getUserChats().subscribe(userChats => {
       this.ChatServiceProvider.userChats.next(userChats);
@@ -80,6 +82,8 @@ export class ChatPage {
     this.ChatServiceProvider.currentChat.subscribe(currentChat => {
       this.currentChat = currentChat;
     });
+
+
   }
   /*CHECK IF THERE ARE NEWMESSAGES*/
   hasNewMessages(chat) {

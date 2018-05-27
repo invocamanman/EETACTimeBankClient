@@ -6,6 +6,7 @@ import {Chat} from "../../models/chat/chat";
 import {Message} from "../../models/chat/message"
 import * as io from 'socket.io-client';
 import {messageTypes} from "../../configs/enums_chat";
+import {MessageFromChat} from "../../models/chat/MessageFromChat";
 
 /*
   Generated class for the ChatServiceProvider provider.
@@ -70,5 +71,18 @@ export class ChatServiceProvider {
     this.newMessage.next(messageToSend);
     return message;
   }
-
+  /* GET A NEW MESSAGE*/
+  getPrivateMessage() {
+    const observable = new Observable<MessageFromChat>(observer => {
+      debugger;
+      this.socket.on(messageTypes.NEW_MESSAGE, (data) => {
+        console.log(data);
+        observer.next(data);
+      });
+      return () => {
+        // this.socket.disconnect();
+      };
+    });
+    return observable;
+  }
 }

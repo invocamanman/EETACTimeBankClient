@@ -55,26 +55,23 @@ export class MessagesPage {
     this.ChatServiceProvider.socketConnect();
     this.ChatServiceProvider.currentChat.subscribe((currentChatId) => {
       this.currentChatId = currentChatId;
-  })
-    if(this.currentChatId){
-      this.ChatServiceProvider.getUserChat(this.currentChatId).subscribe((chat) =>{
-      this.conversation = chat;
-      this.assignPhotos(); }  )
+    })
+    if (this.currentChatId) {
+      this.ChatServiceProvider.getUserChat(this.currentChatId).subscribe((chat) => {
+        this.conversation = chat;
+        this.assignPhotos();
+      })
     }
     this.ChatServiceProvider.newMessage.subscribe((message) => {
+      debugger;
       if (message) {
-        console.log('this is the actual:'+this.message);
-        if(this.conversation){
+          if (this.conversation) {
           this.conversation.messages.push(message);
-          const frameTosend = { 'chatId': this.currentChatId, message };
+          const frameTosend = {'chatId': this.currentChatId, message};
           this.ChatServiceProvider.sendMessageSocket(messageTypes.NEW_MESSAGE, frameTosend);
           const userChats = this.ChatServiceProvider.userChats.value;
-          console.log(userChats);
-          console.log(this.currentChatId);
           const chats = userChats.map(chat => {
-            console.log('chat');
-            console.log(chat);
-            if (chat.id === this.currentChatId) {
+              if (chat.id === this.currentChatId) {
               console.log('trobat afegeixo el missatge:' + message.text);
               return {...chat, lastMessage: message.text};
             } else {
@@ -86,7 +83,13 @@ export class MessagesPage {
 
       }
     });
-
+    this.ChatServiceProvider.getPrivateMessage().subscribe(privateMessage => {
+      if (privateMessage) {
+          if (privateMessage.chatId === this.currentChatId) {
+          this.conversation.messages.push(privateMessage.message);
+          }
+      }
+    });
   }
   /*CHECK IF IS THE USER*/
   isTheUser(Object){
