@@ -1,3 +1,4 @@
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -36,6 +37,7 @@ import {ImageuploadPage} from "../pages/imageupload/imageupload";
 import {ChatPage} from "../pages/chat/chat";
 
 
+
 @NgModule({
   declarations: [
     MyApp,
@@ -48,6 +50,7 @@ import {ChatPage} from "../pages/chat/chat";
     ChatPage
   ],
   imports: [
+    FormsModule,
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpClientModule,

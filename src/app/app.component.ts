@@ -1,15 +1,15 @@
 import { Component, ViewChild } from '@angular/core';
-import { Events, Nav, Platform } from 'ionic-angular';
+import {Events, Nav, Platform} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
 import { ProfilePage } from '../pages/profile/profile';
-import { PeticionsPage } from '../pages/peticions/peticions';
-import { MainpagePage } from "../pages/mainpage/mainpage";
-import { BancPage } from '../pages/banc/banc'
-import { MessagesPage } from '../pages/messages/messages'
-import { ChatPage } from "../pages/chat/chat";
+import { MainpagePage} from "../pages/mainpage/mainpage";
+import {PeticionsPage} from '../pages/peticions/peticions';
+import {BancPage} from '../pages/banc/banc'
+import {MessagesPage} from '../pages/messages/messages'
+import {ChatPage} from "../pages/chat/chat";
 
 
 @Component({
@@ -23,11 +23,14 @@ export class MyApp {
 
   pages: Array<{title: string, component: any, icon: string}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public events: Events) {
+
+
+  constructor(public platform: Platform, public statusBar: StatusBar,
+              public splashScreen: SplashScreen, public events: Events) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      //this.username = localStorage.getItem('username');
+      this.username = localStorage.getItem('username');
 
       events.subscribe('user:created', (username) => {
         // user and time are the same arguments passed in `events.publish(user, time)`
@@ -38,7 +41,7 @@ export class MyApp {
       splashScreen.hide();
       this.pages = [
 
-        { title: 'ChatsActuals',component:ChatPage,icon:'mail'},
+        {title: 'ChatsActuals',component:ChatPage,icon:'mail'},
         { title: 'Pagina Principal', component: MainpagePage, icon: 'home'},
         { title: 'Perfil', component: ProfilePage, icon: 'contact'},
         { title: 'Missatges' , component: MessagesPage, icon: 'mail'},

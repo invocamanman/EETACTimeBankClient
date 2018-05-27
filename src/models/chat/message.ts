@@ -9,4 +9,8 @@
    text: string;
    date: Date;
    readIt: boolean;
+
  }
+
+
+

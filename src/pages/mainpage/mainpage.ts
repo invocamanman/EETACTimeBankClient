@@ -1,6 +1,6 @@
 import { Component, ViewChild, OnInit, OnDestroy} from '@angular/core';
 import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 import {HttpErrorResponse, HttpEventType} from "@angular/common/http";
 //models
@@ -15,7 +15,6 @@ import {UserServiceProvider} from "../../providers/user-service/user-service";
 
 import {ISubscription} from "rxjs/Subscription";
 import {ImageuploadPage} from "../imageupload/imageupload";
-
 
 
 /**
@@ -35,6 +34,8 @@ import {ImageuploadPage} from "../imageupload/imageupload";
 
 })
 export class MainpagePage implements OnInit, OnDestroy {
+
+
 
   showModalUser: boolean;
   showModalActivity: boolean;
