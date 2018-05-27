@@ -21,6 +21,7 @@ export class MyApp {
   username:String;
   rootPage:any = HomePage;
 
+  foto:String='assets/imgs/logo.png';
   pages: Array<{title: string, component: any, icon: string}>;
 
 

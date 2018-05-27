@@ -37,7 +37,7 @@ export class SigninPage {
         localStorage.setItem('username', data.username);
         this.navCtrl.setRoot('mainpage');
         this.events.publish('user:created', data.username);
-
+  //cosa imagen
         let toast = this.toastCtrl.create({
           message: 'User was login successfully :D' + data.userId,
           duration: 3000
