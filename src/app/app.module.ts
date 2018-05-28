@@ -35,6 +35,7 @@ import { RequestDetailPage } from "../pages/peticions/request-detail/request-det
 
 import {ImageuploadPage} from "../pages/imageupload/imageupload";
 import {ChatPage} from "../pages/chat/chat";
+import {FavoritesPage} from "../pages/favorites/favorites";
 
 
 
@@ -47,6 +48,7 @@ import {ChatPage} from "../pages/chat/chat";
     BancPage,
     MessagesPage,
     ImageuploadPage,
+    FavoritesPage,
     ChatPage
   ],
   imports: [
@@ -64,6 +66,7 @@ import {ChatPage} from "../pages/chat/chat";
     PeticionsPage,
     BancPage,
     MessagesPage,
+    FavoritesPage,
     ImageuploadPage,
     ChatPage
   ],

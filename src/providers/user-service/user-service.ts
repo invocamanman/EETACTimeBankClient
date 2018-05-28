@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpRequest, HttpEvent, HttpEventType } from '
 import { Injectable } from '@angular/core';
 import { Observable } from '../../../node_modules/rxjs';
 import {User} from "../../models/user.model";
+import {Activity} from "../../models/activity.model";
 
 const url = 'users';
 @Injectable()
@@ -12,7 +13,6 @@ export class UserServiceProvider {
   signIn$(username: string, password: string): Observable<any> {
     console.log(url);
     return this.http.post<any>(url + '/signin', { username, password });
-
   }
 
   signUp$(userData: any) {
@@ -37,6 +37,15 @@ export class UserServiceProvider {
       reportProgress: true
     });
     return this.http.request(req);
+  }
+
+  getFavorites(user: string) {
+    return this.http.get<Activity[]>(url + '/favorites/' + user);
+  }
+
+  updateFavorites(user: string, list: Activity[]) {
+    const json = { favorites: list };
+    return this.http.put<any>(url + '/favorites/' + user, json);
   }
 
 }
