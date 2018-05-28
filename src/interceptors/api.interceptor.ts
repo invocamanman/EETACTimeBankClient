@@ -25,8 +25,12 @@ export class APIInterceptor implements HttpInterceptor {
       url: `http://localhost:3000/${req.url}`,
       //url: `http://bancdetemps.tk:3000/${req.url}`,
       headers: req.headers.set('Authorization', authorization)
+
+      //url: `http://192.168.0.13:3000/${req.url}`
+
     });
-    return next.handle(apiReq).catch((error, caught) => {
+    return next.handle(apiReq)
+      .catch((error, caught) => {
 
         if (error.status === 401) {
             //logout users, redirect to login page
@@ -35,7 +39,7 @@ export class APIInterceptor implements HttpInterceptor {
             //this.navCtrl.push('signin');
             return Observable.throw(error);
 
-        }
+        };
         if(error.status === 419){
           return Observable.throw(error);
         }

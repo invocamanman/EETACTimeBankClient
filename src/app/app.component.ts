@@ -12,6 +12,7 @@ import {MessagesPage} from '../pages/messages/messages'
 import {ChatPage} from "../pages/chat/chat";
 import {FavoritesPage} from "../pages/favorites/favorites";
 
+import {CercaactivitatsPage} from "../pages/cercaactivitats/cercaactivitats";
 
 @Component({
   templateUrl: 'app.html'
@@ -30,9 +31,12 @@ export class MyApp {
   constructor(public platform: Platform, public statusBar: StatusBar,
               public splashScreen: SplashScreen, public events: Events) {
     platform.ready().then(() => {
+      // Okay, so the platform is ready and our plugins are available.
+      // Here you can do any higher level native things you might need.
       this.username = localStorage.getItem('username');
 
       events.subscribe('user:created', (username) => {
+        // user and time are the same arguments passed in `events.publish(user, time)`
         this.username=username;
       });
 
@@ -46,12 +50,16 @@ export class MyApp {
         { title: 'Favorits', component: FavoritesPage, icon: 'heart'},
         { title: 'Banc' , component: BancPage, icon: 'cash'},
         { title: 'Peticions' , component: PeticionsPage, icon: 'notifications'},
+        { title: 'Cerca activitats' , component: CercaactivitatsPage, icon: 'search'},
         { title: 'Exit', component: HomePage, icon: 'exit' }
+
       ];
     });
   }
 
   openPage(page) {
+    // Reset the content nav to have just this page
+    // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
   }
 }

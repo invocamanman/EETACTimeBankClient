@@ -1,0 +1,83 @@
+<!--
+  Generated template for the CercaactivitatsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+
+<ion-header >
+<ion-navbar color="secondary">
+  <button ion-button menuToggle>
+    <ion-icon name="menu"></ion-icon>
+  </button>
+  <ion-title>Cerca Activitats</ion-title>
+</ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div>
+    <h4>Busque su actividad</h4>
+    <ion-searchbar #buscador (ionInput)="getItems($event)"></ion-searchbar>
+    <!--
+    <input #buscadoractividad  type="text" id="buscador" class="form-control" placeholder="buscar" required="" autofocus="">
+    <button ion-button (click)="Filtrar(buscadoractividad.value)">Filtrar</button>
+    -->
+    <!--
+    <ion-item>
+      <ion-label>Opciones de filtrado</ion-label>
+      <ion-select [(ngModel)]="options123">
+        <ion-option value=1>Categories</ion-option>
+        <ion-option value=2>Tags</ion-option>
+        <ion-option value=3>Preu</ion-option>
+        <ion-option value=4>Nom</ion-option>
+        <ion-option value=5>GPS</ion-option>
+      </ion-select>
+    </ion-item>
+    -->
+    <ion-item>
+      <ion-range min="10" max="200" pin="true" [(ngModel)]="distance" color="secondary">
+        <ion-icon range-left small name="walk"></ion-icon>
+        <ion-icon range-right name="walk"></ion-icon>
+      </ion-range>
+    </ion-item>
+    <ion-item>
+      <ion-range min="1" max="10" pin="true" [(ngModel)]="price" color="secondary">
+        <ion-icon range-left small name="clock"></ion-icon>
+        <ion-icon range-right name="clock"></ion-icon>
+      </ion-range>
+      <ion-checkbox [(ngModel)]="useprice" (ionChange)="updateuseprice(buscador.value)" dark checked="true"></ion-checkbox>
+    </ion-item>
+  </div>
+
+
+<div>
+  <ion-list>
+    <ion-item *ngFor="let Activity of Activitylist">
+      <p>{{ Activity.name }}</p>
+      <p>Descripción: {{Activity.description.substring(0,30) }} ...</p>
+    </ion-item>
+  </ion-list>
+
+
+</div>
+
+  <!--
+  <div class="card"  *ngFor="let Activity of Activitylist">
+    <div class="card-body">
+      <h3 class="card-text">{{Activity.name}}
+        <a><small class="text-muted">@{{Activity.user}}</small></a>
+      </h3>
+      <p><em>Publicat el {{Activity.date | date:"dd/MM/yyyy/ 'a les' h:mma"}}</em></p>
+      <hr><h5>{{Activity.description}}</h5>
+      <div class="row">&nbsp;&nbsp;
+        <div class="card" *ngFor="let tags of Activity.tags">&nbsp;{{tags}}&nbsp;</div>
+      </div>
+      <div class="d-flex justify-content-between align-items-center">
+        <h3>{{Activity.cost}}h</h3>
+      </div>
+    </div>
+
+
+  </div>
+  -->
+</ion-content>
