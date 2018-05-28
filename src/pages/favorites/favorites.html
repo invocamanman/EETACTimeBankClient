@@ -19,10 +19,10 @@
   </ion-item>
 
   <div *ngIf="showData">
-    <ul *ngFor="let activity of favoritList">
+    <ion-list *ngFor="let activity of favoritList">
       <ion-card>
         <ion-item>
-          <h3><b>{{activity.name}}</b><a><small> @{{activity.user}}</small></a></h3>
+          <h1><b>{{activity.name}}</b><a><small> @{{activity.user}}</small></a></h1>
           <ion-icon (click)="delete(activity)" item-right name="close-circle"></ion-icon>
         </ion-item>
         <ion-card-content>
@@ -40,10 +40,10 @@
               <ion-card>{{category}}</ion-card>
             </div>
           </div>
-          <h3 align="right"><b>{{activity.cost}}h</b></h3>
+          <h1 align="right"><b>{{activity.cost}}h</b></h1>
         </ion-card-content>
       </ion-card>
-    </ul>
+    </ion-list>
   </div>
 
 </ion-content>
