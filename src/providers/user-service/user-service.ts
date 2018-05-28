@@ -1,8 +1,7 @@
-import { HttpClient, HttpHeaders, HttpRequest, HttpEvent, HttpEventType } from '@angular/common/http';
+import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from '../../../node_modules/rxjs';
-import {User} from "../../models/user.model";
-import {Activity} from "../../models/activity.model";
+import { User } from "../../models/user.model";
 
 const url = 'users';
 @Injectable()
@@ -28,6 +27,10 @@ export class UserServiceProvider {
     return this.http.get<User>(url + '/' + name);
   }
 
+  updateProfileUser$(name: string, body: any) {
+    return this.http.put<any>(url + '/' + name, body);
+  }
+
   addchat$(json: any) {
     return this.http.post<any>(url + 'chats/add', json);
   }
@@ -38,14 +41,4 @@ export class UserServiceProvider {
     });
     return this.http.request(req);
   }
-
-  getFavorites(user: string) {
-    return this.http.get<Activity[]>(url + '/favorites/' + user);
-  }
-
-  updateFavorites(user: string, list: Activity[]) {
-    const json = { favorites: list };
-    return this.http.put<any>(url + '/favorites/' + user, json);
-  }
-
 }

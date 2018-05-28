@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { Activity } from "../../models/activity.model";
 import { UserServiceProvider } from "../../providers/user-service/user-service";
 
@@ -11,81 +11,57 @@ import { UserServiceProvider } from "../../providers/user-service/user-service";
 export class FavoritesPage {
 
   favoritList: Activity[];
+  id: string;
+  showData: boolean;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private userService: UserServiceProvider) {  }
+  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, private userService: UserServiceProvider) { }
 
-  ionViewDidLoad() {
-    this.favoritList = [
-      {
-        _id: 'gbr28gh5rqufn2ne0wnf',
-        name: 'Test',
-        latitude: 41,
-        longitude: 4,
-        cost: 4,
-        user: 'alberti_tu',
-        description: 'Test succesful.',
-        imatge: '',
-        date: '2018-05-28T09:50:42.709Z',
-        tags: ['EA', 'minim', '1'],
-        category: ['exam', 'programing']
-      },
-      {
-        _id: 'gbu42ng9g54ur2g42rgh',
-        name: 'Proba',
-        latitude: 41.4,
-        longitude: 3.2,
-        cost: 2.25,
-        user: 'goldenapple',
-        description: 'Test passed',
-        imatge: '',
-        date: '2018-05-28T10:14:42.709Z',
-        tags: ['EA', 'minim', '1'],
-        category: ['exam', 'programing']
-      }
-    ];
-/*
-    this.favoritList = [];
-    this.userService.getFavorites(localStorage.getItem('username')).subscribe(data =>{
-      this.favoritList = data;
-    });
-*/
-  }
+  ionViewDidLoad() { this.select() }
 
-  //Afegir Activitat
-  num: number = 1;
   addDommie() {
-    let dommie: Activity = {
-      _id: 'crtvyb0tbrfg78uogr',
-      name: 'Dommie ' + this.num,
-      latitude: 41.2,
-      longitude: 3.99,
-      cost: 10,
-      user: 'EETAC',
-      description: 'Working Dommie.',
-      imatge: '',
-      date: '2018-05-28T11:53:42.709Z',
-      tags: ['EA', 'minim', '1'],
-      category: ['exam', 'programing']
-    };
+    let send: string[] = [];
+    for (let i in this.favoritList) { send.push(this.favoritList[i]._id); }
+    send.push(this.id);
 
-    this.favoritList.push(dommie);
-
-    this.num = this.num + 1;
+    this.update(send);
+    this.select();
   }
 
-  // Elimina de la lista de favoritos la actividad seleccionada y actualiza el servidor
+  select(){
+    this.showData = false;
+    this.favoritList = [];
+    this.userService.getProfileUser$(localStorage.getItem('username')).subscribe(data => {
+      this.favoritList = data.favorite;
+      console.log(this.favoritList);
+      this.showData = true;
+    });
+  }
+
+  update(send: string[]) {
+    this.userService.updateProfileUser$(localStorage.getItem('username'),
+      {favorite: send}).subscribe(data => {
+      console.log(data);
+      this.ShowMessage(data.result);
+    });
+  }
+
   delete(activity: Activity) {
     let tmp: Activity[] = [];
+    let send: string[] = [];
+
     for (let i in this.favoritList) {
-      if(activity !== this.favoritList[i]) {
+      if (activity !== this.favoritList[i]) {
         tmp.push(this.favoritList[i]);
+        send.push(this.favoritList[i]._id);
       }
     }
     this.favoritList = tmp;   // Lista de Favoritos Actualizada
-/*
-    this.userService.updateFavorites(localStorage.getItem('username'), this.favoritList).subscribe(data => {
-      console.log(data);
-    });
-*/
+
+    this.update(send);
+  }
+
+  ShowMessage(msg: string) {
+    let toast = this.toastCtrl.create({message: msg, duration: 3000});
+    toast.present();
   }
 }

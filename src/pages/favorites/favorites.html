@@ -1,6 +1,6 @@
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="secondary">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -12,18 +12,18 @@
 
 <ion-content padding>
 
-  <ion-item padding>
+  <ion-item>
+    <ion-label floating>Activity ID</ion-label>
+    <ion-input [(ngModel)]="id" type="text" value=""></ion-input>
     <button (click)="addDommie()" ion-button item-right>AFEGIR</button>
   </ion-item>
 
-  <div>
+  <div *ngIf="showData">
     <ul *ngFor="let activity of favoritList">
       <ion-card>
-        <ion-item padding>
-          <button (click)="delete(activity)" ion-button item-right>x</button>
-        </ion-item>
         <ion-item>
-          <h3><b>{{activity.name}}</b><a><small>@{{activity.user}}</small></a></h3>
+          <h3><b>{{activity.name}}</b><a><small> @{{activity.user}}</small></a></h3>
+          <button (click)="delete(activity)" ion-button item-right>x</button>
         </ion-item>
         <ion-card-content>
           <p><i>Publicat el {{activity.date | date:"dd/MM/yyyy 'a les' h:mma"}}</i></p>
@@ -35,7 +35,6 @@
               <ion-card>{{tag}}</ion-card>
             </div>
           </div>
-
           <div class="row"> Categories:
             <div class="card" *ngFor="let category of activity.category">
               <ion-card>{{category}}</ion-card>

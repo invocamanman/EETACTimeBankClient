@@ -26,8 +26,7 @@ export class APIInterceptor implements HttpInterceptor {
       //url: `http://bancdetemps.tk:3000/${req.url}`,
       headers: req.headers.set('Authorization', authorization)
     });
-    return next.handle(apiReq)
-      .catch((error, caught) => {
+    return next.handle(apiReq).catch((error, caught) => {
 
         if (error.status === 401) {
             //logout users, redirect to login page
