@@ -18,15 +18,6 @@ export class FavoritesPage {
 
   ionViewDidLoad() { this.select() }
 
-  addDommie() {
-    let send: string[] = [];
-    for (let i in this.favoritList) { send.push(this.favoritList[i]._id); }
-    send.push(this.id);
-
-    this.update(send);
-    this.select();
-  }
-
   select(){
     this.showData = false;
     this.favoritList = [];
@@ -37,27 +28,47 @@ export class FavoritesPage {
     });
   }
 
+  // Establece el color del icono Favoritos
+  isFavorite(activity: Activity) : boolean {
+    let state: boolean = false;
+    let num = this.favoritList.indexOf(activity);
+    if(num > -1) { state = true; }
+
+    console.log("ISFAV "+activity.name+ " > "+state);
+
+    return state;
+  }
+
+  // Lista de Favoritos
+  favorite(activity: Activity) {
+    let find: boolean = false;
+    let send: string[] = this.favoritList.map((object) => {
+      if(object._id == activity._id) { find = true; }
+      return object._id;
+    });
+
+    if(find == false) {
+      //Añadimos la actividad a Favoritos
+      send.push(activity._id);
+      this.favoritList.push(activity);
+    } else {
+      // Eliminamos la actividad de Favoritos
+      let num = this.favoritList.indexOf(activity);
+      send.splice(num,1);
+      this.favoritList.splice(num,1);
+    }
+
+    this.update(send);
+  }
+
   update(send: string[]) {
     this.userService.updateProfileUser$(localStorage.getItem('username'),
       {favorite: send}).subscribe(data => {
       console.log(data);
-      this.ShowMessage(data.result);
-    });
-  }
-
-  delete(activity: Activity) {
-    let tmp: Activity[] = [];
-    let send: string[] = [];
-
-    for (let i in this.favoritList) {
-      if (activity !== this.favoritList[i]) {
-        tmp.push(this.favoritList[i]);
-        send.push(this.favoritList[i]._id);
+      if(data.result == 'ERROR') {
+        this.ShowMessage(data.result);
       }
-    }
-    this.favoritList = tmp;   // Lista de Favoritos Actualizada
-
-    this.update(send);
+    });
   }
 
   ShowMessage(msg: string) {

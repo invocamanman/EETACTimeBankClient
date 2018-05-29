@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 import { HttpErrorResponse } from "@angular/common/http";
 import { User } from '../../models/user.model';
 import { UserServiceProvider } from '../../providers/user-service/user-service';
@@ -33,6 +33,7 @@ export class ProfilePage {
   username: string;
   owner: boolean;
   userForeign: string;
+  favoritList: Activity[];
 
   fullstar = '../../../assets/img/star-full.png';
   star = '../../../assets/img/star.png';
@@ -43,7 +44,7 @@ export class ProfilePage {
   star5img = this.star;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private userService: UserServiceProvider,
+  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, private userService: UserServiceProvider,
               private activityService: ActivityServiceProvider) {
     this.showProfile = false;
     this.showView = false;
@@ -54,11 +55,11 @@ export class ProfilePage {
   }
 
   ionViewDidLoad() {
-    this.connect(localStorage.getItem('username'), true);
+    this.getProfile(localStorage.getItem('username'), true);
   }
 
   // Recibe la respuesta del servidor
-  connect(user: string, owner: boolean) {
+  getProfile(user: string, owner: boolean) {
     this.showProfile = false;
     this.owner = owner;
     if (owner === false) { this.userForeign = user; }
@@ -66,8 +67,9 @@ export class ProfilePage {
       data => {
         this.user = data;      // El JSON se guarda en user
         console.log(this.user);
-        this.showProfile = true;      // Mostramos el resultado
         this.setStars(data.rating);
+        this.favoritList = this.user.favorite;
+        this.showProfile = true;      // Mostramos el resultado
       },
       (err: HttpErrorResponse) => { console.log(err.error); }
     );
@@ -149,6 +151,53 @@ export class ProfilePage {
         this.navCtrl.setRoot('ChatPage')
       }
     });
+  }
+
+  // Establece el color del icono Favoritos
+  isFavorite(activity: Activity) : boolean {
+    let state: boolean = false;
+    let num = this.favoritList.indexOf(activity);
+    if(num > -1) { state = true; }
+
+    console.log("IS FAVORITE "+ activity.name + " > "+state);
+
+    return state;
+  }
+
+  favorite(activity: Activity) {
+    let find: boolean = false;
+    let send: string[] = this.favoritList.map((object) => {
+      if(object._id == activity._id) { find = true; }
+      return object._id;
+    });
+
+    if(find == false) {
+      //Añadimos la actividad a Favoritos
+      send.push(activity._id);
+      this.favoritList.push(activity);
+    } else {
+      // Eliminamos la actividad de Favoritos
+      let num = this.favoritList.indexOf(activity);
+      send.splice(num,1);
+      this.favoritList.splice(num,1);
+    }
+
+    this.update(send);
+  }
+
+  update(send: string[]) {
+    this.userService.updateProfileUser$(localStorage.getItem('username'),
+      {favorite: send}).subscribe(data => {
+      console.log(data);
+      if(data.result == 'ERROR') {
+        this.ShowMessage(data.result);
+      }
+    });
+  }
+
+  ShowMessage(msg: string) {
+    let toast = this.toastCtrl.create({message: msg, duration: 3000});
+    toast.present();
   }
 
 
