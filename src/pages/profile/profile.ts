@@ -155,13 +155,10 @@ export class ProfilePage {
 
   // Establece el color del icono Favoritos
   isFavorite(activity: Activity) : boolean {
-    let state: boolean = false;
-    let num = this.favoritList.indexOf(activity);
-    if(num > -1) { state = true; }
-
-    console.log("IS FAVORITE "+ activity.name + " > "+state);
-
-    return state;
+    for(let i in this.favoritList) {
+      if (this.favoritList[i]._id == activity._id) { return true; }
+    }
+    return false;
   }
 
   favorite(activity: Activity) {
