@@ -1,6 +1,7 @@
 import * as jwt_decode from 'jwt-decode';
 import { Injectable } from '@angular/core';
 export const TOKEN_NAME: string = 'token';
+
 @Injectable()
 export class AuthServiceProvider {
 

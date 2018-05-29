@@ -8,12 +8,6 @@ import * as io from 'socket.io-client';
 import {messageTypes} from "../../configs/enums_chat";
 import {MessageFromChat} from "../../models/chat/MessageFromChat";
 
-/*
-  Generated class for the ChatServiceProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 const url = 'chats';
 @Injectable()
 export class ChatServiceProvider {
@@ -21,6 +15,7 @@ export class ChatServiceProvider {
   userChats = new BehaviorSubject(null);
   currentChat = new BehaviorSubject(null);
   newMessage = new BehaviorSubject(null);
+<<<<<<< HEAD
   socket;
   private url = 'http://localhost:8880';
   constructor(public http: HttpClient) {
@@ -40,6 +35,10 @@ export class ChatServiceProvider {
     this.socket.emit(messageType, JSON.stringify(message));
     console.log(JSON.stringify(message));
   }
+=======
+
+  constructor(public http: HttpClient) { }
+>>>>>>> origin/master
   /* GET ALL THE USERCHATS */
   public getUserChats() {
     const id = localStorage.getItem('userId');

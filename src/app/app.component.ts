@@ -6,7 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { ProfilePage } from '../pages/profile/profile';
 import { MainpagePage} from "../pages/mainpage/mainpage";
-import {ActivityRequestPage} from '../pages/activity-request/activity-request';
+import {PeticionsPage} from '../pages/peticions/peticions';
 import {BancPage} from '../pages/banc/banc'
 import {MessagesPage} from '../pages/messages/messages'
 import {ChatPage} from "../pages/chat/chat";
@@ -25,7 +25,8 @@ export class MyApp {
 
 
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public events: Events) {
+  constructor(public platform: Platform, public statusBar: StatusBar,
+              public splashScreen: SplashScreen, public events: Events) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -45,7 +46,7 @@ export class MyApp {
         { title: 'Perfil', component: ProfilePage, icon: 'contact'},
         { title: 'Missatges' , component: MessagesPage, icon: 'mail'},
         { title: 'Banc' , component: BancPage, icon: 'cash'},
-        { title: 'Peticions' , component: ActivityRequestPage, icon: 'notifications'},
+        { title: 'Peticions' , component: PeticionsPage, icon: 'notifications'},
         { title: 'Exit', component: HomePage, icon: 'exit' }
 
       ];

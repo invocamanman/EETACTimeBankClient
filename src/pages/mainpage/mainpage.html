@@ -4,14 +4,183 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Mainpage</ion-title>
+    <ion-title>Banc de Temps de l'EETAC</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <!-- NOVETATS -->
+<ion-content>
+  <div padding>
+    <ion-segment [(ngModel)]="inici">
+      <ion-segment-button value="newActivity">
+        Registra una activitat
+      </ion-segment-button>
+      <ion-segment-button value="novetats">
+        Mira les Novetats
+      </ion-segment-button>
+    </ion-segment>
+  </div>
 
+  <div [ngSwitch]="inici">
+
+    <ion-list *ngSwitchCase="'newActivity'">
+      <ion-item>
+
+        <div class="list">
+          <form #activityForm="ngForm"  (ngSubmit)="onSubmit()" >
+
+            <div padding align="center">
+            <ion-icon name="add-circle"></ion-icon>
+            <input type="text" name="name" #name="ngModel" [(ngModel)]="activity.name" class="form-control" required placeholder="Nom de l'activitat"/>
+            <span *ngIf = "!name.valid && name.touched">El nom és obligatori</span>
+            <br><br>
+
+            <ion-icon name="create"></ion-icon>
+            <textarea name="description" #description="ngModel" [(ngModel)]="activity.description" class="form-control" placeholder="Descripció" required ></textarea>
+            <span *ngIf = "!description.valid && description.touched">la descripció és obligatoria</span>
+            <br><br>
+
+            <ion-icon name="logo-bitcoin"></ion-icon>
+            <input type="number" min=0 step=0.25 name="cost" #cost="ngModel" [(ngModel)]="activity.cost" class="form-control" required />
+            <span *ngIf = "!cost.valid && cost.touched">el preu és obligatori</span>
+            <br><br>
+
+            <label class="item item-input item-select">
+              <ion-icon name="apps"></ion-icon>
+              <div class="input-label">Tria una categoria</div>
+              <select name="category" #category="ngModel" [(ngModel)]="activity.category" >
+                <option value="Musica">                     Musica                       </option>
+                <option value="Fotos i videos">             Fotos i videos               </option>
+                <option value="informatica i oficina">      Informatica i oficina        </option>
+                <option value="Bellesa i salut">            Bellesa i salut              </option>
+                <option value="Alimentació i beguda">       Alimentació i beguda         </option>
+                <option value="Hogar, jardí, bricolatge">   Hogar, jardí, bricolatge     </option>
+                <option value="Videojocs">                  Videojocs                    </option>
+                <option value="moda">                       Moda                         </option>
+                <option value="Esport i aire lliure">       Esport i aire lliure         </option>
+                <option value="coche i moto">               Coche i Moto                 </option>
+                <option value="manualitats">                Manualitats                  </option>
+                <option value="Ocio">                       Ocio                         </option>
+              </select>
+            </label>
+
+            </div>
+
+            <div padding align="center">
+              <label>Afegeix caracteristiques (tags) a l'activitat</label>
+              <br>
+              <button ion-button small color="green" round (click)="addTag('Material Extra')">
+                Material Extra
+              </button>
+              <button ion-button small color="blue" round (click)="addTag('Activitat UPC')">
+                Activitat UPC
+              </button> <br>
+              <button ion-button small color="light" round (click)="addTag('Aquatic')">
+                Activitat aquatica
+              </button>
+              <button ion-button small color="brown" round (click)="addTag('Aire lliure')">
+                Aire lliure
+              </button>
+              <br>
+              <button ion-button small color="dark" round (click)="addTag('Exclusiu')">
+                Exclusiu
+              </button>
+              <button ion-button small color="danger" round (click)="addTag('Urgent')">
+                Urgent
+              </button>
+              <button ion-button small color="lavender" round (click)="addTag('Gratis')">
+                Gratis
+              </button>
+              <br>
+            </div>
+
+
+            <div padding align="center">
+              <button ion-button outline item-end icon-left type="submit" value="Afegir" class="btn btn-success" [disabled]="!activityForm.form.valid" >
+                <ion-icon name="checkmark-circle"></ion-icon>
+                Afegir activitat
+              </button>
+            </div>
+
+          </form>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </ion-item>
+
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'novetats'">
+
+      <div class="list">
+
+        <ion-card *ngFor="let activity of novetats">
+          <img src={{activity.imatge}}/>
+          <ion-card-content>
+            <ion-card-title>
+              {{activity.name}}
+            </ion-card-title>
+            <p align="justify">
+             {{activity.description}}
+            </p>
+
+          </ion-card-content>
+          <ion-card-content align="right">
+            <p>
+              <button (click)="veurePerfil(activity.user)" data-toggle="modal" data-target="#modalUser" class="btn btn-danger">
+                <ion-icon name="contact" title="Veure Usuari"></ion-icon>
+              </button>
+              <button (click)="getActivity(activity)" data-toggle="modal" data-target="#modalActivity" class="btn btn-danger">
+                <ion-icon name="eye" title="Detall Activitat"></ion-icon>
+              </button>
+              <ion-icon name="logo-bitcoin" title="Preu"></ion-icon> : {{activity.cost}}
+              <button (click)="makeApetition(activity.user, activity._id)" data-toggle="modal" data-target="#modalPeticio" class="btn btn-danger">
+                <ion-icon name="send" title="Fer una petició"></ion-icon>
+              </button>
+            </p>
+          </ion-card-content>
+        </ion-card>
+
+      </div>
+
+    </ion-list>
+  </div>
+
+  <div padding hideWhen="inici">
+    <ion-segment>
+      <div class="card-background-page">
+        <ion-card>
+          <img class="image" src="https://familytime.io/img/time-bank/timebank-management-system.png"/>
+          <div class="card-title">Benvitgut</div>
+          <div class="card-subtitle">Guanya Temps i Estalvia Diners</div>
+        </ion-card>
+      </div>
+    </ion-segment>
+  </div>
 </ion-content>
+
+
+
+
+
+
 
 
 

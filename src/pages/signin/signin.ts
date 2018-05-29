@@ -21,7 +21,9 @@ import { Events } from 'ionic-angular';
 export class SigninPage {
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private userService: UserServiceProvider, public toastCtrl: ToastController, public events: Events) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+              private userService: UserServiceProvider,
+              public toastCtrl: ToastController, public events: Events) {
 
   }
 
