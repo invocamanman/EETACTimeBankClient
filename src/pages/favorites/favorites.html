@@ -1,0 +1,49 @@
+<ion-header>
+
+  <ion-navbar color="secondary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Favorits</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-item>
+    <ion-label floating>Activity ID</ion-label>
+    <ion-input [(ngModel)]="id" type="text" value=""></ion-input>
+    <button (click)="addDommie()" ion-button item-right>AFEGIR</button>
+  </ion-item>
+
+  <div *ngIf="showData">
+    <ion-list *ngFor="let activity of favoritList">
+      <ion-card>
+        <ion-item>
+          <h1><b>{{activity.name}}</b><a><small> @{{activity.user}}</small></a></h1>
+          <ion-icon (click)="delete(activity)" item-right name="close-circle"></ion-icon>
+        </ion-item>
+        <ion-card-content>
+          <p><i>Publicat el {{activity.date | date:"dd/MM/yyyy 'a les' h:mma"}}</i></p>
+          <hr><h5>{{activity.description}}</h5>
+        </ion-card-content>
+        <ion-card-content>
+          <div class="row"> Etiquetes:
+            <div class="card" *ngFor="let tag of activity.tags">
+              <ion-card>{{tag}}</ion-card>
+            </div>
+          </div>
+          <div class="row"> Categories:
+            <div class="card" *ngFor="let category of activity.category">
+              <ion-card>{{category}}</ion-card>
+            </div>
+          </div>
+          <h1 align="right"><b>{{activity.cost}}h</b></h1>
+        </ion-card-content>
+      </ion-card>
+    </ion-list>
+  </div>
+
+</ion-content>

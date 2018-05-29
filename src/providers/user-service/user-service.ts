@@ -1,7 +1,7 @@
-import { HttpClient, HttpHeaders, HttpRequest, HttpEvent, HttpEventType } from '@angular/common/http';
+import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from '../../../node_modules/rxjs';
-import {User} from "../../models/user.model";
+import { User } from "../../models/user.model";
 
 const url = 'users';
 @Injectable()
@@ -12,7 +12,6 @@ export class UserServiceProvider {
   signIn$(username: string, password: string): Observable<any> {
     console.log(url);
     return this.http.post<any>(url + '/signin', { username, password });
-
   }
 
   signUp$(userData: any) {
@@ -28,6 +27,10 @@ export class UserServiceProvider {
     return this.http.get<User>(url + '/' + name);
   }
 
+  updateProfileUser$(name: string, body: any) {
+    return this.http.put<any>(url + '/' + name, body);
+  }
+
   addchat$(json: any) {
     return this.http.post<any>(url + 'chats/add', json);
   }
@@ -38,5 +41,4 @@ export class UserServiceProvider {
     });
     return this.http.request(req);
   }
-
 }

@@ -10,7 +10,9 @@ import {PeticionsPage} from '../pages/peticions/peticions';
 import {BancPage} from '../pages/banc/banc'
 import {MessagesPage} from '../pages/messages/messages'
 import {ChatPage} from "../pages/chat/chat";
+import {FavoritesPage} from "../pages/favorites/favorites";
 
+import {CercaactivitatsPage} from "../pages/cercaactivitats/cercaactivitats";
 
 @Component({
   templateUrl: 'app.html'
@@ -21,6 +23,7 @@ export class MyApp {
   username:String;
   rootPage:any = HomePage;
 
+  foto:String='assets/imgs/logo.png';
   pages: Array<{title: string, component: any, icon: string}>;
 
 
@@ -32,21 +35,23 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.username = localStorage.getItem('username');
 
-      events.subscribe('user:created', (username) => {
+      events.subscribe('user:created', (username, image) => {
         // user and time are the same arguments passed in `events.publish(user, time)`
         this.username=username;
+        this.foto=image;
       });
 
       statusBar.styleDefault();
       splashScreen.hide();
       this.pages = [
-
-        {title: 'ChatsActuals',component:ChatPage,icon:'mail'},
         { title: 'Pagina Principal', component: MainpagePage, icon: 'home'},
         { title: 'Perfil', component: ProfilePage, icon: 'contact'},
+        { title: 'ChatsActuals',component:ChatPage,icon:'mail'},
         { title: 'Missatges' , component: MessagesPage, icon: 'mail'},
+        { title: 'Favorits', component: FavoritesPage, icon: 'heart'},
         { title: 'Banc' , component: BancPage, icon: 'cash'},
         { title: 'Peticions' , component: PeticionsPage, icon: 'notifications'},
+        { title: 'Cerca activitats' , component: CercaactivitatsPage, icon: 'search'},
         { title: 'Exit', component: HomePage, icon: 'exit' }
 
       ];
@@ -58,7 +63,5 @@ export class MyApp {
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
   }
-
-
 }
 

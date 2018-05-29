@@ -33,8 +33,11 @@ import { PeticionsPage } from '../pages/peticions/peticions';
 import { ActivityRequestProvider } from '../providers/activity-request/activity-request';
 import { RequestDetailPage } from "../pages/peticions/request-detail/request-detail";
 
+
 import {ImageuploadPage} from "../pages/imageupload/imageupload";
 import {ChatPage} from "../pages/chat/chat";
+import {CercaactivitatsPage} from "../pages/cercaactivitats/cercaactivitats";
+import {FavoritesPage} from "../pages/favorites/favorites";
 
 
 
@@ -47,7 +50,10 @@ import {ChatPage} from "../pages/chat/chat";
     BancPage,
     MessagesPage,
     ImageuploadPage,
-    ChatPage
+    FavoritesPage,
+    ChatPage,
+    CercaactivitatsPage
+
   ],
   imports: [
     FormsModule,
@@ -64,8 +70,10 @@ import {ChatPage} from "../pages/chat/chat";
     PeticionsPage,
     BancPage,
     MessagesPage,
+    FavoritesPage,
     ImageuploadPage,
-    ChatPage
+    ChatPage,
+    CercaactivitatsPage
   ],
   providers: [
     StatusBar,

@@ -4,6 +4,7 @@ import 'rxjs/Rx';
 import {Activity} from "../../models/activity.model";
 import {ActivityRequest} from "../../models/activityRequest.model";
 import { environment } from '../../environments/environment';
+import {Observable} from "rxjs/Rx";
 
 @Injectable()
 export class ActivityServiceProvider {
@@ -34,5 +35,11 @@ export class ActivityServiceProvider {
     return this.http.post<ActivityRequest>('activityRequest/fromname/' , newRequest).map(res => res);
   }
 
+
+  filtrarpornombre$(name:string, cost:number, distance:number): Observable<Activity[]> {
+    console.log(this.http.post<Activity[]>('activities/filtranombre', {name: name}))
+    return this.http.post<Activity[]>('activities/filtranombre', {name: name, cost: cost, distance:distance});
+
+  }
 
 }
