@@ -52,7 +52,11 @@ export class RegisterPage {
           console.log(data.error.dbError);
           if (data.error.dbError === 'Duplicated')
           {
-            console.log("ESE NOMBRE NOOO")
+            let toast = this.toastCtrl.create({
+              message: 'Ese nombre nooo D:',
+              duration: 3000
+            });
+            toast.present();
           }
           else {
             switch (data.error.validationError) {

@@ -35,9 +35,10 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.username = localStorage.getItem('username');
 
-      events.subscribe('user:created', (username) => {
+      events.subscribe('user:created', (username, image) => {
         // user and time are the same arguments passed in `events.publish(user, time)`
         this.username=username;
+        this.foto=image;
       });
 
       statusBar.styleDefault();
