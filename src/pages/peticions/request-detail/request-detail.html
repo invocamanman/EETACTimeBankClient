@@ -69,7 +69,7 @@
             <button *ngIf="tipo==='sortint'&&(peticio.isDone||!peticio.accepted)" disabled>
                 <ion-icon name="checkmark"></ion-icon>
             </button>
-            <button *ngIf="tipo==='sortint'&&(!peticio.isDone&&peticio.accepted)" (click)="presentActionSheet()" >
+            <button *ngIf="tipo==='sortint'&&(!peticio.isDone&&peticio.accepted)" (click)="presentActionSheet(peticio)" >
                 <ion-icon name="checkmark"></ion-icon>
             </button>
           </ion-col>

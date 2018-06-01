@@ -33,8 +33,8 @@ export class ActivityRequestProvider {
     return this.http.put('activityRequest/accept/', {'id': idPetition}).map(res => res);
   }
 
-  donePetition(idPetition, rate) {
-    return this.http.put('activityRequest/done/', {'id': idPetition, 'rate': rate}).map(res => res);
+  donePetition(idPetition, rate, rating) {
+    return this.http.put('activityRequest/done/', {'id': idPetition, 'rate': rate, 'rating': rating}).map(res => res);
   }
 
 }
