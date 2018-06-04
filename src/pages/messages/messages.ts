@@ -3,13 +3,6 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {ChatServiceProvider} from "../../providers/chat-service/chat-service";
 import {messageTypes} from "../../configs/enums_chat";
 
-/**
- * Generated class for the MessagesPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-messages',
@@ -55,7 +48,7 @@ export class MessagesPage {
     this.ChatServiceProvider.socketConnect();
     this.ChatServiceProvider.currentChat.subscribe((currentChatId) => {
       this.currentChatId = currentChatId;
-    })
+    });
     if (this.currentChatId) {
       this.ChatServiceProvider.getUserChat(this.currentChatId).subscribe((chat) => {
         this.conversation = chat;
@@ -65,6 +58,7 @@ export class MessagesPage {
     this.ChatServiceProvider.newMessage.subscribe((message) => {
       debugger;
       if (message) {
+        debugger;
           if (this.conversation) {
           this.conversation.messages.push(message);
           const frameTosend = {'chatId': this.currentChatId, message};
@@ -84,9 +78,26 @@ export class MessagesPage {
       }
     });
     this.ChatServiceProvider.getPrivateMessage().subscribe(privateMessage => {
+      debugger;
       if (privateMessage) {
           if (privateMessage.chatId === this.currentChatId) {
           this.conversation.messages.push(privateMessage.message);
+        }
+          else{
+            const userChats = this.ChatServiceProvider.userChats.value;
+            const chats = userChats.map(chat => {
+              if (chat.id === privateMessage.chatId) {
+                if (chat.userId === privateMessage.message.userFrom) {
+                  return {...chat, lastMessage: privateMessage.message.text, newMessages: chat.newMessages + 1};
+                }
+                else { /*IS FROM THE USER*/
+                  return {...chat, lastMessage: privateMessage.message.text}; }
+              }
+              else {
+                return chat;
+              }
+            });
+            this.ChatServiceProvider.userChats.next(chats);
           }
       }
     });

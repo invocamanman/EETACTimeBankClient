@@ -8,21 +8,27 @@ import * as io from 'socket.io-client';
 import {messageTypes} from "../../configs/enums_chat";
 import {MessageFromChat} from "../../models/chat/MessageFromChat";
 
-const url = 'chats';
+/*
+  Generated class for the ChatServiceProvider provider.
+
+  See https://angular.io/guide/dependency-injection for more info on providers
+  and Angular DI.
+*/
+const urlChats = 'chats';
 @Injectable()
 export class ChatServiceProvider {
 
   userChats = new BehaviorSubject(null);
   currentChat = new BehaviorSubject(null);
   newMessage = new BehaviorSubject(null);
-<<<<<<< HEAD
   socket;
-  private url = 'http://localhost:8880';
+  private url = 'https://backend.bancdetemps.tk';
   constructor(public http: HttpClient) {
     console.log('Hello ChatServiceProvider Provider');
   }
   /* CREATE A SOCKET CONNECTION */
   socketConnect() {
+    debugger;
     if (!this.socket) {
       this.socket = io(this.url);
       console.log('nou sockt creat' + this.socket);
@@ -35,19 +41,15 @@ export class ChatServiceProvider {
     this.socket.emit(messageType, JSON.stringify(message));
     console.log(JSON.stringify(message));
   }
-=======
-
-  constructor(public http: HttpClient) { }
->>>>>>> origin/master
   /* GET ALL THE USERCHATS */
   public getUserChats() {
     const id = localStorage.getItem('userId');
-    return this.http.get<any>(url+'/' + id);
+    return this.http.get<any>(urlChats+'/' + id);
   }
   /* GET A PARTICULAR CHAT*/
   public getUserChat(chatId): Observable<Chat> {
     const id = localStorage.getItem('userId');
-    return this.http.get<any>(url + '/' + chatId + '/' + id);
+    return this.http.get<any>(urlChats + '/' + chatId + '/' + id);
   }
   /* SET THE CURRENT CHAT CHANGING BY A CLICK AND ACTUALIZE NEW MESSAGES*/
   public setCurrentChat(chatId): BehaviorSubject<Chat> {
@@ -65,11 +67,14 @@ export class ChatServiceProvider {
   }
   /*SEND MESSAGE*/
   public sendMessage(message): BehaviorSubject<Chat> {
-    const id = localStorage.getItem('userId');
-    const messageToSend = new Message(id, message, new Date(), false);
+   const messageDate = new Date();
+    const temporaryMessageId = messageDate + 'ID';
+    const userFromId = localStorage.getItem('userId');
+    const messageToSend = new Message(userFromId, message, messageDate, false, temporaryMessageId);
     this.newMessage.next(messageToSend);
     return message;
   }
+
   /* GET A NEW MESSAGE*/
   getPrivateMessage() {
     const observable = new Observable<MessageFromChat>(observer => {

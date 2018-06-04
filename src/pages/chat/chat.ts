@@ -3,6 +3,7 @@ import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {ChatServiceProvider} from "../../providers/chat-service/chat-service";
 import {MessagesPage} from "../messages/messages";
 
+
 /**
  * Generated class for the ChatPage page.
  *
@@ -16,63 +17,23 @@ import {MessagesPage} from "../messages/messages";
   templateUrl: 'chat.html',
 })
 export class ChatPage {
-  messages = [
-    {
-      text: "hola",
-      userId: "5b0186059856392360b11de1"
-    },
-    {
-      text: "ciao",
-      userId: "5b0186059856392360b11de2"
-    },
-    {
-      text: "como estas?",
-      userId: "5b0186059856392360b11de1"
-    },
-
-    {
-      text: "molto benne!",
-      userId: "5b0186059856392360b11de2"
-    },
-  ];
-  userChats = [
-    {
-      id: "5b0186059856392360b11de1",
-      lastMessage: "que tal el finde?",
-      newMessages: 0,
-      userAvatar: "https://pbs.twimg.com/profile_images/965772032397987840/khi8fehb_400x400.jpg",
-      userId: "5b0159f96eabea0ed00eac91",
-      userName: "Maria"
-    },
-    {
-      id: "5b0186059856392360b11de1",
-      lastMessage: "nos vemos mañana?",
-      newMessages: 0,
-      userAvatar: "http://scriboeditorial.com/wp-content/uploads/2015/03/sa_1425548456Mi%20chica%20ideal-583x583.jpg",
-      userId: "5b0159f96eabea0ed00eac91",
-      userName: "Ruth"
-    },
-    {
-      id: "5b0186059856392360b11de1",
-      lastMessage: "Hoy he dormido fatal, porque he tenido que domir fuera de casa",
-      newMessages: 0,
-      userAvatar: "https://coo.tuvotacion.com/imagenes_opciones/cual-chico-de-cnco-es-mas-guapo-1791440.jpg",
-      userId: "5b0159f96eabea0ed00eac91",
-      userName: "Alex"
-    }
-  ];
+  userChats;
   currentChat;
+  currentChatId;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public ChatServiceProvider: ChatServiceProvider) {
   }
 
   ionViewDidLoad() {
-
     this.ChatServiceProvider.socketConnect();
     /*RECEIVE THE USERSCHATS FROM SERVER*/
     this.ChatServiceProvider.getUserChats().subscribe(userChats => {
       this.ChatServiceProvider.userChats.next(userChats);
       console.log(userChats);
+    });
+    /*RECEIVE THE CURRENT CHATID*/
+    this.ChatServiceProvider.currentChat.subscribe((currentChatId) => {
+      this.currentChatId = currentChatId;
     });
     /*UPDATE THE USERSCHATS FROM SERVICE*/
     this.ChatServiceProvider.userChats.subscribe(userChats => {
@@ -82,8 +43,28 @@ export class ChatPage {
     this.ChatServiceProvider.currentChat.subscribe(currentChat => {
       this.currentChat = currentChat;
     });
+    /*RECEIVE A NEW MESSAGE*/
+    this.ChatServiceProvider.getPrivateMessage().subscribe(privateMessage => {
+      debugger;
+      if (privateMessage) {
+        const ChatsActuals = this.ChatServiceProvider.userChats.value;
+        const mychats = ChatsActuals.map(chat => {
+          if (chat.id === privateMessage.chatId) {
+            if (privateMessage.message.userFrom === localStorage.getItem('userId')) {
+              return {...chat, lastMessage: privateMessage.message.text};
+            }
+            else {
+              return {...chat, lastMessage: privateMessage.message.text, newMessages: chat.newMessages + 1};
+            }
+          }
+          else {
+            return chat;
+          }
+        });
+        this.ChatServiceProvider.userChats.next(mychats);
 
-
+      }
+    });
   }
   /*CHECK IF THERE ARE NEWMESSAGES*/
   hasNewMessages(chat) {
@@ -92,7 +73,7 @@ export class ChatPage {
   /*SET THE CURRENT CHAT*/
   onUserClick(chatId) {
     console.log(chatId);
-    this.ChatServiceProvider.setCurrentChat(chatId);
+    this.ChatServiceProvider.setCurrentChat(chatId); //seleccionem el chat
     this.navCtrl.push(MessagesPage);
   }
 }

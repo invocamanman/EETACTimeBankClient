@@ -2,13 +2,35 @@ page-chat{
 
   ion-thumbnail{
 
+
+
+  }
+  ion-avatar{
     img{
 
       border-radius: 50%;
+      overflow: hidden;
+      width: 85px !important;
+      height: 85px !important;
+
 
     }
 
   }
+  ion-list{
+    border-width: 1px;
+    border-top: 0px;
+    border-right: 0px;
+    border-left: 0px;
+    border-style:dashed;
+
+
+  }
+  img{
+
+
+  }
+
 
 }
 

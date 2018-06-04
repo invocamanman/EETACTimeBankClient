@@ -55,18 +55,25 @@ export class ProfilePage {
   }
 
   ionViewDidLoad() {
-    this.getProfile(localStorage.getItem('username'), true);
-  }
+    this.connect(localStorage.getItem('username'), true);
+    this.userService.Owner.subscribe((currentOwner) => {
+      if(currentOwner){this.username = currentOwner.username;}
+    });
+
+      }
 
   // Recibe la respuesta del servidor
-  getProfile(user: string, owner: boolean) {
+  connect(user: string, owner: boolean) {
     this.showProfile = false;
     this.owner = owner;
     if (owner === false) { this.userForeign = user; }
     this.userService.getProfileUser$(user).subscribe(
       data => {
-        this.user = data;      // El JSON se guarda en user
+        this.user = data;
+        this.userService.Owner.next(data);
+        // El JSON se guarda en user
         console.log(this.user);
+        this.showProfile = true;      // Mostramos el resultado
         this.setStars(data.rating);
         this.favoritList = this.user.favorite;
         this.showProfile = true;      // Mostramos el resultado
@@ -217,6 +224,11 @@ export class ProfilePage {
   mapClick(event) {
     this.latitud_marker_activity = event.coords.lat;
     this.longitud_marker_activity = event.coords.lng;
+  }
+  /*Minim2 modificar l'usuari*/
+  goToModify(){
+    this.navCtrl.push('modifyProfile');
+
   }
 
   setStars(num: number) {
