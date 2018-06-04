@@ -36,9 +36,9 @@ export class ActivityServiceProvider {
   }
 
 
-  filtrarpornombre$(name:string, cost:number, distance:number): Observable<Activity[]> {
+  filtrarpornombre$(name:string, cost:number, distance:number, latitude:number, longitude:number): Observable<Activity[]> {
     console.log(this.http.post<Activity[]>('activities/filtranombre', {name: name}))
-    return this.http.post<Activity[]>('activities/filtranombre', {name: name, cost: cost, distance:distance});
+    return this.http.post<Activity[]>('activities/filtranombre', {name: name, cost: cost, distance:distance, latitude:latitude, longitude:longitude});
 
   }
 

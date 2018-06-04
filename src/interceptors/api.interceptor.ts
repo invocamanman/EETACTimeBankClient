@@ -15,7 +15,7 @@ export class APIInterceptor implements HttpInterceptor {
       const apiReq = req.clone({
 
         url: `http://localhost:3000/${req.url}`
-        //url: `http://bancdetemps.tk:3000/${req.url}`
+        //url: `https://backend.bancdetemps.tk/${req.url}`
       });
       return next.handle(apiReq);
     }
@@ -23,7 +23,7 @@ export class APIInterceptor implements HttpInterceptor {
     const authorization = this.authService.getToken();
     const apiReq = req.clone({
       url: `http://localhost:3000/${req.url}`,
-      //url: `http://bancdetemps.tk:3000/${req.url}`,
+      //url: `https://backend.bancdetemps.tk/${req.url}`,
       headers: req.headers.set('Authorization', authorization)
 
       //url: `http://192.168.0.13:3000/${req.url}`

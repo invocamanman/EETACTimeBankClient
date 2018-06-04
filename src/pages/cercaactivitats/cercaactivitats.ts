@@ -22,19 +22,37 @@ export class CercaactivitatsPage {
   price:number;
   useprice:boolean;
   pricebuscador:number;
+  latitude:number;
+  longitude:number;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,public toastCtrl: ToastController, private activityservice: ActivityServiceProvider) {
 
     //this.options123=4;
-    this.distance = 20;
+    this.distance = 4;
     this.price=5;
+    this.latitude=41.414578;
+    this.longitude=2.179301;
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CercaactivitatsPage');
+    this.Filtrar("");
   }
   Filtrar(buscador){
     console.log(buscador);
-    this.BuscaNom(buscador);
+    if(this.useprice)
+    {
+      this.pricebuscador=this.price;
+    }
+    else{
+      this.pricebuscador=10;
+    }
+    this.activityservice.filtrarpornombre$(buscador,this.pricebuscador,this.distance, this.latitude,this.longitude).subscribe(
+      data => {
+        console.log(data);
+        this.Activitylist = data;
+      }
+    );
     /*
     if (this.options123==1)
     {
@@ -59,6 +77,12 @@ export class CercaactivitatsPage {
     */
   }
 
+  getItems(ev: any) {
+    let val = ev.target.value;
+
+    // if the value is an empty string don't filter the items
+    this.Filtrar(val);
+  }
 
   BuscaCategories(categoria){
 
@@ -71,30 +95,10 @@ export class CercaactivitatsPage {
   }
   BuscaNom(nom){
 
-    if(this.useprice)
-    {
-      this.pricebuscador=this.price;
-    }
-    else{
-      this.pricebuscador=10;
-    }
-    this.activityservice.filtrarpornombre$(nom,this.pricebuscador,this.distance).subscribe(
-      data => {
-        console.log(data);
-        this.Activitylist = data;
-      }
-    );
+
   }
   BuscaGPS(coordenada){
 
   }
-  getItems(ev: any) {
-    let val = ev.target.value;
 
-    // if the value is an empty string don't filter the items
-   this.Filtrar(val);
-  }
-  updateuseprice(buscador){
-    this.Filtrar(buscador);
-  }
 }

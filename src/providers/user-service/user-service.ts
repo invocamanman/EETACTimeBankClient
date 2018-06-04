@@ -1,4 +1,4 @@
-import { HttpClient, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpRequest, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from '../../../node_modules/rxjs';
 import { User } from "../../models/user.model";
@@ -35,10 +35,5 @@ export class UserServiceProvider {
     return this.http.post<any>(url + 'chats/add', json);
   }
 
-  fileUpdate(file: File) {
-    const req = new HttpRequest('POST', '/file', file, {
-      reportProgress: true
-    });
-    return this.http.request(req);
-  }
+  
 }

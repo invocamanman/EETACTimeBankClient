@@ -38,6 +38,8 @@ import {ImageuploadPage} from "../pages/imageupload/imageupload";
 import {ChatPage} from "../pages/chat/chat";
 import {CercaactivitatsPage} from "../pages/cercaactivitats/cercaactivitats";
 import {FavoritesPage} from "../pages/favorites/favorites";
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
+import { SignInProvider } from '../providers/sign-in/sign-in';
 
 
 
@@ -92,7 +94,9 @@ import {FavoritesPage} from "../pages/favorites/favorites";
     ActivityRequestProvider,
     FileServiceProvider,
     ChatServiceProvider,
-    ActivityRequestService
+    ActivityRequestService,
+    Facebook,
+    SignInProvider
   ]
 })
 export class AppModule {}
