@@ -26,7 +26,7 @@
       </ion-avatar>
       <h2>{{chat.userName}}</h2>
       <p>{{chat.lastMessage}}</p>
-      <span class="new-messages">{{chat.newMessages}}</span>
+      <span *ngIf="chat.newMessages" class="new-messages">{{chat.newMessages}}</span>
     </ion-item>
   </ion-list>
 </ion-content>

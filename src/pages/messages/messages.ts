@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Content } from 'ionic-angular';
 import {ChatServiceProvider} from "../../providers/chat-service/chat-service";
 import {messageTypes} from "../../configs/enums_chat";
 
@@ -9,6 +9,7 @@ import {messageTypes} from "../../configs/enums_chat";
   templateUrl: 'messages.html',
 })
 export class MessagesPage {
+  @ViewChild(Content) content: Content;
   userChats = [
     {
       id: "5b0186059856392360b11de1",
@@ -44,7 +45,18 @@ export class MessagesPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,public ChatServiceProvider:ChatServiceProvider) {
   }
 
+  ionViewWillEnter(): void {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom() {
+    setTimeout(() => {
+      this.content.scrollToBottom();
+    });
+  }
+
   ionViewDidLoad() {
+
     this.ChatServiceProvider.socketConnect();
     this.ChatServiceProvider.currentChat.subscribe((currentChatId) => {
       this.currentChatId = currentChatId;
@@ -118,7 +130,7 @@ export class MessagesPage {
     console.log(this.message);
     this.ChatServiceProvider.sendMessage(this.message);
     this.message = null;
-
+    this.scrollToBottom();
   }
   private assignPhotos() {
     const id = localStorage.getItem('userId');
@@ -130,6 +142,4 @@ export class MessagesPage {
       this.myPhoto = this.conversation.users[1].userAvatar;
     }
   }
-
-
 }

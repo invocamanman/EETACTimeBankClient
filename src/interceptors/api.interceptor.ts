@@ -14,8 +14,8 @@ export class APIInterceptor implements HttpInterceptor {
     if(req.url.match('users/signin') || req.url.match('users/signup')) {
       const apiReq = req.clone({
 
-        url: `http://localhost:3000/${req.url}`
-        //url: `https://backend.bancdetemps.tk/${req.url}`
+       url: `http://localhost:3000/${req.url}`
+      //url: `https://backend.bancdetemps.tk/${req.url}`
       });
       return next.handle(apiReq);
     }
