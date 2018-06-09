@@ -129,6 +129,13 @@ export class MainpagePage implements OnInit, OnDestroy {
     this.showModalActivity = true;
   }
 
+  fitxa(activity, user) {
+    this.navCtrl.push('FitxaPage', {
+      activity: activity,
+      user: user
+    });
+  }
+
   makeApetition(ToName, idActivity) {
     this.activityRequest = new ActivityRequest(localStorage.username, ToName, idActivity, false, null, null);
     this.sendAPetition(this.activityRequest);
