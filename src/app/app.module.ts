@@ -30,6 +30,7 @@ import {ProfilePage}          from "../pages/profile/profile";
 import {BancPage}             from "../pages/banc/banc";
 import {MessagesPage}         from "../pages/messages/messages";
 import { PeticionsPage } from '../pages/peticions/peticions';
+import { PeticionsPageModule } from '../pages/peticions/peticions.module';
 import { ActivityRequestProvider } from '../providers/activity-request/activity-request';
 import { RequestDetailPage } from "../pages/peticions/request-detail/request-detail";
 
@@ -40,6 +41,8 @@ import {CercaactivitatsPage} from "../pages/cercaactivitats/cercaactivitats";
 import {FavoritesPage} from "../pages/favorites/favorites";
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { SignInProvider } from '../providers/sign-in/sign-in';
+import {MainpagePage} from "../pages/mainpage/mainpage";
+import {MainpagePageModule} from "../pages/mainpage/mainpage.module";
 
 
 
@@ -48,7 +51,7 @@ import { SignInProvider } from '../providers/sign-in/sign-in';
     MyApp,
     HomePage,
     ProfilePage,
-    PeticionsPage,
+    //PeticionsPage,
     BancPage,
     MessagesPage,
     ImageuploadPage,
@@ -62,11 +65,14 @@ import { SignInProvider } from '../providers/sign-in/sign-in';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpClientModule,
+    PeticionsPageModule,
+    MainpagePageModule,
     AgmCoreModule.forRoot({ apiKey: 'AIzaSyD4btF6um1qmUt7IZDVsU8WlWI6-PMYZk0' })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    MainpagePage,
     HomePage,
     ProfilePage,
     PeticionsPage,
