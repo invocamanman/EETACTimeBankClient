@@ -21,15 +21,17 @@ export class CercaactivitatsPage {
   distance:number;
   price:number;
   useprice:boolean;
+  usedistance:boolean;
   pricebuscador:number;
+  distancebuscador:number;
   latitude:number;
   longitude:number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,public toastCtrl: ToastController, private activityservice: ActivityServiceProvider) {
 
     //this.options123=4;
-    this.distance = 4;
-    this.price=5;
+    this.distance = 1;
+    this.price=1;
     this.latitude=41.414578;
     this.longitude=2.179301;
   }
@@ -47,34 +49,21 @@ export class CercaactivitatsPage {
     else{
       this.pricebuscador=10;
     }
-    this.activityservice.filtrarpornombre$(buscador,this.pricebuscador,this.distance, this.latitude,this.longitude).subscribe(
+
+    if(this.usedistance)
+    {
+      this.distancebuscador=this.distance;
+    }
+    else{
+      this.distancebuscador=14000000;//dsitancia mayor que se puede recorrer en tierra
+    }
+    this.activityservice.filtrarpornombre$(buscador,this.pricebuscador,this.distancebuscador, this.latitude,this.longitude).subscribe(
       data => {
         console.log(data);
         this.Activitylist = data;
       }
     );
-    /*
-    if (this.options123==1)
-    {
-      this.BuscaCategories(buscador);
-    }
-    else if (this.options123==2)
-    {
-      this.BuscaTags(buscador);
-    }
-    else if (this.options123==3)
-    {
-      this.BuscaPreu(buscador);
-    }
-    else if (this.options123==4)
-    {
-      this.BuscaNom(buscador);
-    }
-    else if (this.options123==5)
-    {
-      this.BuscaGPS(buscador);
-    }
-    */
+
   }
 
   getItems(ev: any) {
@@ -84,21 +73,6 @@ export class CercaactivitatsPage {
     this.Filtrar(val);
   }
 
-  BuscaCategories(categoria){
 
-  }
-  BuscaTags(tag){
-
-  }
-  BuscaPreu(preu){
-
-  }
-  BuscaNom(nom){
-
-
-  }
-  BuscaGPS(coordenada){
-
-  }
 
 }

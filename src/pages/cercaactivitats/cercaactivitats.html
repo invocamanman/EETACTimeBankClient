@@ -16,7 +16,6 @@
 
 <ion-content padding>
   <div>
-    <h4>Busque su actividad</h4>
     <ion-searchbar #buscador (ionInput)="getItems($event)" ></ion-searchbar>
     <!--
     <input #buscadoractividad  type="text" id="buscador" class="form-control" placeholder="buscar" required="" autofocus="">
@@ -39,6 +38,7 @@
         <ion-icon range-left small name="walk"></ion-icon>
         <ion-icon range-right name="walk"></ion-icon>
       </ion-range>
+      <ion-checkbox [(ngModel)]="usedistance" (ionChange)="Filtrar(buscador.value)" dark checked="false"></ion-checkbox>
     </ion-item>
     <ion-item>
       <ion-range min="1" max="10" pin="true" [(ngModel)]="price" [debounce]="250" (ionChange)="Filtrar(buscador.value)" color="secondary">
