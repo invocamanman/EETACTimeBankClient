@@ -59,8 +59,7 @@ export class ProfilePage {
     this.userService.Owner.subscribe((currentOwner) => {
       if(currentOwner){this.username = currentOwner.username;}
     });
-
-      }
+  }
 
   // Recibe la respuesta del servidor
   connect(user: string, owner: boolean) {
