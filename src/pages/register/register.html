@@ -1,9 +1,3 @@
-<!--
-  Generated template for the RegisterPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar color="secondary">
@@ -14,17 +8,15 @@
 
 
 <ion-content padding>
-  <div>
-    <div >
-      <h1 class="h3 mb-3 font-weight-normal">Make an account</h1>
-      <input #name type="text" id="inputname" class="form-control" placeholder="Name" required="">
-      <input #username type="text" id="inputUsername" class="form-control" placeholder="Username" required="" autofocus="">
-      <input #mail type="email" id="inputmail" class="form-control" placeholder="Mail" required="" autofocus="">
-      <input #password type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
-      <input #password2 type="password" id="inputpassword2" class="form-control" placeholder="Confirm Password" required="" autofocus="">
-      <button class="btn btn-lg btn-primary btn-block" (click)="signUp(name.value,username.value,mail.value, password.value, password2.value)">Sign up</button>
-      <button class="btn btn-lg btn-primary"(click)="goToSignin()">already registered? sign in</button>
-      <p class="mt-3 mb-3 text-muted">EA© Spring 2017-2018</p>
-    </div>
+  <div class="page-register">
+    <h1 class="h3 mb-3 font-weight-normal">Make an account</h1>
+    <div><input #name type="text" id="inputname" class="form-control" placeholder="Name" required=""></div>
+    <div><input #username type="text" id="inputUsername" class="form-control" placeholder="Username" required="" autofocus=""></div>
+    <div><input #mail type="email" id="inputmail" class="form-control" placeholder="Mail" required="" autofocus=""></div>
+    <div><input #password type="password" id="inputPassword" class="form-control" placeholder="Password" required=""></div>
+    <div><input #password2 type="password" id="inputpassword2" class="form-control" placeholder="Confirm Password" required="" autofocus=""></div>
+    <button ion-button (click)="signUp(name.value,username.value,mail.value, password.value, password2.value)">Sign Up</button>
+    <button ion-button (click)="goToSignin()">Cancel</button>
+    <p class="mt-3 mb-3 text-muted">EA© Spring 2017-2018</p>
   </div>
 </ion-content>

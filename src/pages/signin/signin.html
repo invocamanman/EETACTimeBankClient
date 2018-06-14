@@ -11,14 +11,16 @@
   <div class="signin">
     <h1 class="h3 mb-3 font-weight-normal">Please Sign In</h1>
 
-    <div style="padding-top: 10px"><input #username type="text" id="inputUsername" class="form-control" placeholder="Username" required="" autofocus=""></div>
-    <div><input #password type="password" id="inputPassword" class="form-control" placeholder="Password" required=""></div>
+    <div style="padding-top: 10px">
+      <div><input #username type="text" id="inputUsername" class="form-control" placeholder="Username" required="" autofocus=""></div>
+      <div><input #password type="password" id="inputPassword" class="form-control" placeholder="Password" required=""></div>
+    </div>
 
-    <div><button ion-button class="btn btn-lg btn-primary btn-block" (click)=" signIn(username.value, password.value)">Sign in</button></div>
-    <div><button ion-button (click)="signInFace()">Sign in Facebook</button></div>
+    <div><button ion-button (click)="signIn(username.value, password.value)">Sign In</button></div>
+    <div><button ion-button (click)="signInFace()">Sign In with Facebook</button></div>
 
     <div style="padding-top: 10px">
-      <p>Still not registered? Please <a (click)=" goToRegister()">SignUp</a> it's free!</p>
+      <p>Still not registered? Please <a (click)=" goToRegister()">Sign Up</a> it's free!</p>
       <p class="mt-3 mb-3 text-muted">EA© Spring 2017-2018</p>
     </div>
   </div>
