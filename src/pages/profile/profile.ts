@@ -271,4 +271,10 @@ export class ProfilePage {
         break;
     }
   }
+  fitxa(activity, user) {
+    this.navCtrl.push('FitxaPage', {
+      activity: activity,
+      user: user
+    });
+  }
 }
