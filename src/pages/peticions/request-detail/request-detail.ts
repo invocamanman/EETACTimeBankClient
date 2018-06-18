@@ -26,7 +26,7 @@ export class RequestDetailPage {
 
   tipo: string;
 
-  constructor(private view: ViewController, public navParams: NavParams,
+  constructor(public navCtrl: NavController, private view: ViewController, public navParams: NavParams,
     private activityRequestProvider: ActivityRequestProvider, public actionSheetCtrl: ActionSheetController) {
     this.peticio = this.navParams.get('peticion');
     this.tipo = this.navParams.get('tipo');
@@ -61,49 +61,69 @@ export class RequestDetailPage {
     this.view.dismiss();
   }
 
-  presentActionSheet() {
+  presentActionSheet(activityRequest) {
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Puntua la Activitat',
       buttons: [
         {
           text: '1 Estrella',
           handler: () => {
-            this.activityRequestProvider.donePetition(this.peticio['_id'],1).subscribe(data=>{
+            /*this.activityRequestProvider.donePetition(this.peticio['_id'],1).subscribe(data=>{
               if(data['message']==='ok')
               this.peticio['isDone']=true;
-            })
+            })*/
+            this.navCtrl.push('ComentariPage', {
+              item: activityRequest,
+              rate: 1
+            });
           }
         }, {
           text: '2 Estrellas',
           handler: () => {
-            this.activityRequestProvider.donePetition(this.peticio['_id'],2).subscribe(data=>{
+            /*this.activityRequestProvider.donePetition(this.peticio['_id'],2).subscribe(data=>{
               if(data['message']==='ok')
               this.peticio['isDone']=true;
-            })
+            })*/
+            this.navCtrl.push('ComentariPage', {
+              item: activityRequest,
+              rate: 2
+            });
           }
         }, {
           text: '3 Estrellas',
           handler: () => {
-            this.activityRequestProvider.donePetition(this.peticio['_id'],3).subscribe(data=>{
+           /* this.activityRequestProvider.donePetition(this.peticio['_id'],3).subscribe(data=>{
               if(data['message']==='ok')
               this.peticio['isDone']=true;
-            })
+            })*/
+            this.navCtrl.push('ComentariPage', {
+              item: activityRequest,
+              rate: 3
+            });
           }
         }, {
           text: '4 Estrellas',
           handler: () => {
-            this.activityRequestProvider.donePetition(this.peticio['_id'],4).subscribe(data=>{
+            /*this.activityRequestProvider.donePetition(this.peticio['_id'],4).subscribe(data=>{
               if(data['message']==='ok')
               this.peticio['isDone']=true;
-            })
+            })*/
+            this.navCtrl.push('ComentariPage', {
+              item: activityRequest,
+              rate: 4
+            });
           }
         }, {
           text: '5 Estrellas',
           handler: () => {
-            this.activityRequestProvider.donePetition(this.peticio['_id'],5).subscribe(data=>{
+            /*this.activityRequestProvider.donePetition(this.peticio['_id'],5).subscribe(data=>{
               if(data['message']==='ok')
               this.peticio['isDone']=true;
-            })
+            })*/
+            this.navCtrl.push('ComentariPage', {
+              item: activityRequest,
+              rate: 5
+            });
           }
         }
       ]

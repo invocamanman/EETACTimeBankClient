@@ -1,4 +1,3 @@
-
 <ion-header >
   <ion-navbar color="secondary">
     <button ion-button menuToggle>
@@ -29,39 +28,39 @@
           <form #activityForm="ngForm"  (ngSubmit)="onSubmit()" >
 
             <div padding align="center">
-            <ion-icon name="add-circle"></ion-icon>
-            <input type="text" name="name" #name="ngModel" [(ngModel)]="activity.name" class="form-control" required placeholder="Nom de l'activitat"/>
-            <span *ngIf = "!name.valid && name.touched">El nom és obligatori</span>
-            <br><br>
+              <ion-icon name="add-circle"></ion-icon>
+              <input type="text" name="name" #name="ngModel" [(ngModel)]="activity.name" class="form-control" required placeholder="Nom de l'activitat"/>
+              <span *ngIf = "!name.valid && name.touched">El nom és obligatori</span>
+              <br><br>
 
-            <ion-icon name="create"></ion-icon>
-            <textarea name="description" #description="ngModel" [(ngModel)]="activity.description" class="form-control" placeholder="Descripció" required ></textarea>
-            <span *ngIf = "!description.valid && description.touched">la descripció és obligatoria</span>
-            <br><br>
+              <ion-icon name="create"></ion-icon>
+              <textarea name="description" #description="ngModel" [(ngModel)]="activity.description" class="form-control" placeholder="Descripció" required ></textarea>
+              <span *ngIf = "!description.valid && description.touched">la descripció és obligatoria</span>
+              <br><br>
 
-            <ion-icon name="logo-bitcoin"></ion-icon>
-            <input type="number" min=0 step=0.25 name="cost" #cost="ngModel" [(ngModel)]="activity.cost" class="form-control" required />
-            <span *ngIf = "!cost.valid && cost.touched">el preu és obligatori</span>
-            <br><br>
+              <ion-icon name="logo-bitcoin"></ion-icon>
+              <input type="number" min=0 step=0.25 name="cost" #cost="ngModel" [(ngModel)]="activity.cost" class="form-control" required />
+              <span *ngIf = "!cost.valid && cost.touched">el preu és obligatori</span>
+              <br><br>
 
-            <label class="item item-input item-select">
-              <ion-icon name="apps"></ion-icon>
-              <div class="input-label">Tria una categoria</div>
-              <select name="category" #category="ngModel" [(ngModel)]="activity.category" >
-                <option value="Musica">                     Musica                       </option>
-                <option value="Fotos i videos">             Fotos i videos               </option>
-                <option value="informatica i oficina">      Informatica i oficina        </option>
-                <option value="Bellesa i salut">            Bellesa i salut              </option>
-                <option value="Alimentació i beguda">       Alimentació i beguda         </option>
-                <option value="Hogar, jardí, bricolatge">   Hogar, jardí, bricolatge     </option>
-                <option value="Videojocs">                  Videojocs                    </option>
-                <option value="moda">                       Moda                         </option>
-                <option value="Esport i aire lliure">       Esport i aire lliure         </option>
-                <option value="coche i moto">               Coche i Moto                 </option>
-                <option value="manualitats">                Manualitats                  </option>
-                <option value="Ocio">                       Ocio                         </option>
-              </select>
-            </label>
+              <label class="item item-input item-select">
+                <ion-icon name="apps"></ion-icon>
+                <div class="input-label">Tria una categoria</div>
+                <select name="category" #category="ngModel" [(ngModel)]="activity.category" >
+                  <option value="Musica">                     Musica                       </option>
+                  <option value="Fotos i videos">             Fotos i videos               </option>
+                  <option value="informatica i oficina">      Informatica i oficina        </option>
+                  <option value="Bellesa i salut">            Bellesa i salut              </option>
+                  <option value="Alimentació i beguda">       Alimentació i beguda         </option>
+                  <option value="Hogar, jardí, bricolatge">   Hogar, jardí, bricolatge     </option>
+                  <option value="Videojocs">                  Videojocs                    </option>
+                  <option value="moda">                       Moda                         </option>
+                  <option value="Esport i aire lliure">       Esport i aire lliure         </option>
+                  <option value="coche i moto">               Coche i Moto                 </option>
+                  <option value="manualitats">                Manualitats                  </option>
+                  <option value="Ocio">                       Ocio                         </option>
+                </select>
+              </label>
 
             </div>
 
@@ -129,37 +128,50 @@
 
     <ion-list *ngSwitchCase="'novetats'">
 
-      <div class="list">
+      <ion-card *ngFor="let activity of novetats">
+        <img src={{activity.imatge}}>
+        <ion-item>
+          <h1><b>{{activity.name}}</b><a><small> @{{activity.user}}</small></a></h1>
+          <ion-icon *ngIf="isFavorite(activity)"  item-right name="heart" (click)="favorite(activity)" ></ion-icon>
+          <ion-icon *ngIf="!isFavorite(activity)" item-right name="heart-outline" (click)="favorite(activity)" ></ion-icon>
+        </ion-item>
 
-        <ion-card *ngFor="let activity of novetats">
-          <img src={{activity.imatge}}/>
-          <ion-card-content>
-            <ion-card-title>
-              {{activity.name}}
-            </ion-card-title>
-            <p align="justify">
-             {{activity.description}}
-            </p>
+        <ion-card-content>
+          <p><i>Publicat el {{activity.date | date:"dd/MM/yyyy 'a les' h:mma"}}</i></p>
+          <hr><h5>{{activity.description}}</h5>
+        </ion-card-content>
 
-          </ion-card-content>
-          <ion-card-content align="right">
-            <p>
-              <button (click)="veurePerfil(activity.user)" data-toggle="modal" data-target="#modalUser" class="btn btn-danger">
-                <ion-icon name="contact" title="Veure Usuari"></ion-icon>
-              </button>
-              <button (click)="getActivity(activity)" data-toggle="modal" data-target="#modalActivity" class="btn btn-danger">
-                <ion-icon name="eye" title="Detall Activitat"></ion-icon>
-              </button>
-              <ion-icon name="logo-bitcoin" title="Preu"></ion-icon> : {{activity.cost}}
-              <button (click)="makeApetition(activity.user, activity._id)" data-toggle="modal" data-target="#modalPeticio" class="btn btn-danger">
-                <ion-icon name="send" title="Fer una petició"></ion-icon>
-              </button>
-            </p>
-          </ion-card-content>
-        </ion-card>
+        <ion-card-content>
+          <div class="row"> Etiquetes:
+            <div class="card" *ngFor="let tag of activity.tags">
+              <ion-card>{{tag}}</ion-card>
+            </div>
+          </div>
+          <div class="row"> Categories:
+            <div class="card" *ngFor="let category of activity.category">
+              <ion-card>{{category}}</ion-card>
+            </div>
+          </div>
+          <h1 align="right"><b>{{activity.cost}}h</b></h1>
+        </ion-card-content>
 
-      </div>
+        <ion-card-content align="right">
+          <button (click)="veurePerfil(activity.user)" data-toggle="modal" data-target="#modalUser" class="btn btn-danger">
+            <ion-icon name="contact" title="Veure Usuari"></ion-icon>
+          </button>
+          <button (click)="getActivity(activity)" data-toggle="modal" data-target="#modalActivity" class="btn btn-danger">
+            <ion-icon name="eye" title="Detall Activitat"></ion-icon>
+          </button>
+          <button (click)="makeApetition(activity.user, activity._id)" data-toggle="modal" data-target="#modalPeticio" class="btn btn-danger">
+            <ion-icon name="send" title="Fer una petició"></ion-icon>
+          </button>
+        </ion-card-content>
 
+        <ion-card-content>
+          <button ion-button (click)="fitxa(activity, activity.user)">Obrir Fitxa</button>
+        </ion-card-content>
+
+      </ion-card>
     </ion-list>
   </div>
 
@@ -175,12 +187,3 @@
     </ion-segment>
   </div>
 </ion-content>
-
-
-
-
-
-
-
-
-

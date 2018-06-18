@@ -10,5 +10,8 @@ import { MainpagePage } from './mainpage';
   imports: [
     IonicPageModule.forChild(MainpagePage),
   ],
+  exports: [
+    MainpagePage
+  ]
 })
 export class MainpagePageModule {}

@@ -16,14 +16,6 @@ import {UserServiceProvider} from "../../providers/user-service/user-service";
 import {ISubscription} from "rxjs/Subscription";
 import {ImageuploadPage} from "../imageupload/imageupload";
 
-
-/**
- * Generated class for the MainpagePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage({
   name: 'mainpage'
 })
@@ -35,8 +27,6 @@ import {ImageuploadPage} from "../imageupload/imageupload";
 })
 export class MainpagePage implements OnInit, OnDestroy {
 
-
-
   showModalUser: boolean;
   showModalActivity: boolean;
   showModalPetition: boolean;
@@ -46,7 +36,7 @@ export class MainpagePage implements OnInit, OnDestroy {
   activitySelect: Activity;
   activityRequest: ActivityRequest;
   user: User;
-
+  favoritList: Activity[];
   latitud_map: number;
   longitud_map: number;
   latitud_marker_user: number;
@@ -55,10 +45,11 @@ export class MainpagePage implements OnInit, OnDestroy {
   longitud_marker_activity: number;
   showMap: boolean;
   activityNotifSubs: ISubscription;
+
   @ViewChild('activityimage') imageUploader: ImageuploadPage;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
-              public activityService: ActivityServiceProvider,
+  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController,
+              private activityService: ActivityServiceProvider,
               private userService: UserServiceProvider, formBuilder: FormBuilder) {
 
     this.activity = new Activity('', 41.275443, 1.98665, 0, localStorage.username, '', '');
@@ -84,6 +75,10 @@ export class MainpagePage implements OnInit, OnDestroy {
         console.log(<any>error);
       }
     );
+
+    this.userService.getProfileUser$(localStorage.getItem('username')).subscribe(data => {
+      this.favoritList = data.favorite;
+    });
   }
 
   addTag(tag: string) { this.activity.tags.push(tag); }
@@ -129,6 +124,13 @@ export class MainpagePage implements OnInit, OnDestroy {
     this.showModalActivity = true;
   }
 
+  fitxa(activity, user) {
+    this.navCtrl.push('FitxaPage', {
+      activity: activity,
+      user: user
+    });
+  }
+
   makeApetition(ToName, idActivity) {
     this.activityRequest = new ActivityRequest(localStorage.username, ToName, idActivity, false, null, null);
     this.sendAPetition(this.activityRequest);
@@ -163,5 +165,50 @@ export class MainpagePage implements OnInit, OnDestroy {
         console.log(<any>error);
       }
     );
+  }
+
+
+  // Establece el color del icono Favoritos
+  isFavorite(activity: Activity) : boolean {
+    for(let i in this.favoritList) {
+      if (this.favoritList[i]._id == activity._id) { return true; }
+    }
+    return false;
+  }
+
+  favorite(activity: Activity) {
+    let find: boolean = false;
+    let send: string[] = this.favoritList.map((object) => {
+      if(object._id == activity._id) { find = true; }
+      return object._id;
+    });
+
+    if(find == false) {
+      //Añadimos la actividad a Favoritos
+      send.push(activity._id);
+      this.favoritList.push(activity);
+    } else {
+      // Eliminamos la actividad de Favoritos
+      let num = this.favoritList.indexOf(activity);
+      send.splice(num,1);
+      this.favoritList.splice(num,1);
+    }
+
+    this.update(send);
+  }
+
+  update(send: string[]) {
+    this.userService.updateProfileUser$(localStorage.getItem('username'),
+      {favorite: send}).subscribe(data => {
+      console.log(data);
+      if(data.result == 'ERROR') {
+        this.ShowMessage(data.result);
+      }
+    });
+  }
+
+  ShowMessage(msg: string) {
+    let toast = this.toastCtrl.create({message: msg, duration: 3000});
+    toast.present();
   }
 }

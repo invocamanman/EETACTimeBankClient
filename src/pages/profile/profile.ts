@@ -33,6 +33,7 @@ export class ProfilePage {
   username: string;
   owner: boolean;
   userForeign: string;
+  shRating;
   favoritList: Activity[];
 
   fullstar = '../../../assets/img/star-full.png';
@@ -59,8 +60,7 @@ export class ProfilePage {
     this.userService.Owner.subscribe((currentOwner) => {
       if(currentOwner){this.username = currentOwner.username;}
     });
-
-      }
+  }
 
   // Recibe la respuesta del servidor
   connect(user: string, owner: boolean) {
@@ -70,6 +70,7 @@ export class ProfilePage {
     this.userService.getProfileUser$(user).subscribe(
       data => {
         this.user = data;
+        this.shRating = this.user.rating.toFixed(2);
         this.userService.Owner.next(data);
         // El JSON se guarda en user
         console.log(this.user);
@@ -271,5 +272,11 @@ export class ProfilePage {
         this.star5img = this.fullstar;
         break;
     }
+  }
+  fitxa(activity, user) {
+    this.navCtrl.push('FitxaPage', {
+      activity: activity,
+      user: user
+    });
   }
 }
