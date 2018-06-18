@@ -33,6 +33,7 @@ export class ProfilePage {
   username: string;
   owner: boolean;
   userForeign: string;
+  shRating;
   favoritList: Activity[];
 
   fullstar = '../../../assets/img/star-full.png';
@@ -69,6 +70,7 @@ export class ProfilePage {
     this.userService.getProfileUser$(user).subscribe(
       data => {
         this.user = data;
+        this.shRating = this.user.rating.toFixed(2);
         this.userService.Owner.next(data);
         // El JSON se guarda en user
         console.log(this.user);
