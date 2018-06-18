@@ -22,7 +22,7 @@ export class ChatServiceProvider {
   currentChat = new BehaviorSubject(null);
   newMessage = new BehaviorSubject(null);
   socket;
-  private url = 'https://backend.bancdetemps.tk';
+  private url = 'http://localhost:3000';
   constructor(public http: HttpClient) {
     console.log('Hello ChatServiceProvider Provider');
   }
@@ -51,6 +51,23 @@ export class ChatServiceProvider {
     const id = localStorage.getItem('userId');
     return this.http.get<any>(urlChats + '/' + chatId + '/' + id);
   }
+  /* GET CHAT USERS */
+  public getChatUsers(chatId): Observable<any> {
+    const id = localStorage.getItem('userId');
+    return this.http.get<any>(urlChats + '/users/' + chatId + '/' + id);
+  }
+
+  /* GET CHAT MESSAGES */
+  public getChatMessages(chatId, offset, limit): Observable<any> {
+    const id = localStorage.getItem('userId');
+    return this.http.get<any>(urlChats + '/messages/' + chatId + '/' + id, {
+        params: {
+          offset,
+          limit
+        },
+      }
+    );
+  }
   /* SET THE CURRENT CHAT CHANGING BY A CLICK AND ACTUALIZE NEW MESSAGES*/
   public setCurrentChat(chatId): BehaviorSubject<Chat> {
     this.currentChat.next(chatId);
@@ -67,7 +84,7 @@ export class ChatServiceProvider {
   }
   /*SEND MESSAGE*/
   public sendMessage(message): BehaviorSubject<Chat> {
-   const messageDate = new Date();
+    const messageDate = new Date();
     const temporaryMessageId = messageDate + 'ID';
     const userFromId = localStorage.getItem('userId');
     const messageToSend = new Message(userFromId, message, messageDate, false, temporaryMessageId);

@@ -1,7 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, Content } from 'ionic-angular';
 import {ChatServiceProvider} from "../../providers/chat-service/chat-service";
 import {messageTypes} from "../../configs/enums_chat";
+import {Chat} from "../../models/chat/chat";
 
 @IonicPage()
 @Component({
@@ -40,8 +41,14 @@ export class MessagesPage {
   oppositePhoto;
   messages;
   currentChatId;
-  conversation;
+  conversation: Chat = {
+    _id: null,
+    users: [],
+    messages: [],
+  };
+  zone;
   message;
+  finalMessagesReached;
   constructor(public navCtrl: NavController, public navParams: NavParams,public ChatServiceProvider:ChatServiceProvider) {
   }
 
@@ -50,35 +57,58 @@ export class MessagesPage {
   }
 
   scrollToBottom() {
-    setTimeout(() => {
-      this.content.scrollToBottom();
+    this.content && this.content.scrollToBottom();
+  }
+
+  getMessages(currentChatId, offset, limit, callback) {
+    this.ChatServiceProvider.getChatMessages(currentChatId, offset, limit).subscribe(({ messages }) => {
+      this.zone.run(() => {
+        this.conversation.messages = [...messages, ...this.conversation.messages];
+      });
+
+      if (messages.length < limit) {
+        this.finalMessagesReached = true;
+      }
+      callback && callback(this);
+    });
+  }
+
+  getUsers(currentChatId) {
+    this.ChatServiceProvider.getChatUsers(currentChatId).subscribe((users) => {
+      this.conversation.users = users;
+      this.assignPhotos();
     });
   }
 
   ionViewDidLoad() {
-
+    debugger;
     this.ChatServiceProvider.socketConnect();
-    this.ChatServiceProvider.currentChat.subscribe((currentChatId) => {
+    debugger;
+    this.ChatServiceProvider.currentChat.subscribe(async (currentChatId) => {
       this.currentChatId = currentChatId;
+      if (currentChatId) {
+        this.conversation._id = currentChatId;
+        await this.getUsers(currentChatId);
+        await this.getMessages(currentChatId, 0, 10, context => {
+          debugger;
+          return context.scrollToBottom()
+        });
+      }
+
+
     });
-    if (this.currentChatId) {
-      this.ChatServiceProvider.getUserChat(this.currentChatId).subscribe((chat) => {
-        this.conversation = chat;
-        this.assignPhotos();
-      })
-    }
+    this.zone = new NgZone({});
     this.ChatServiceProvider.newMessage.subscribe((message) => {
       debugger;
       if (message) {
-        debugger;
-          if (this.conversation) {
+        if (this.conversation) {
           this.conversation.messages.push(message);
           const frameTosend = {'chatId': this.currentChatId, message};
+          debugger;
           this.ChatServiceProvider.sendMessageSocket(messageTypes.NEW_MESSAGE, frameTosend);
           const userChats = this.ChatServiceProvider.userChats.value;
           const chats = userChats.map(chat => {
               if (chat.id === this.currentChatId) {
-              console.log('trobat afegeixo el missatge:' + message.text);
               return {...chat, lastMessage: message.text};
             } else {
               return chat;
@@ -90,7 +120,6 @@ export class MessagesPage {
       }
     });
     this.ChatServiceProvider.getPrivateMessage().subscribe(privateMessage => {
-      debugger;
       if (privateMessage) {
           if (privateMessage.chatId === this.currentChatId) {
           this.conversation.messages.push(privateMessage.message);
@@ -111,6 +140,13 @@ export class MessagesPage {
             });
             this.ChatServiceProvider.userChats.next(chats);
           }
+      }
+    });
+
+    this.content.ionScrollEnd.subscribe((target) => {
+      const scrolledToTheTop = target && target.scrollTop === 0;
+      if (scrolledToTheTop && !this.finalMessagesReached) {
+        this.getMessages(this.currentChatId, this.conversation.messages.length, 10, null);
       }
     });
   }
